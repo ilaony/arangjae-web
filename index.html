@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>아랑재 Arangjae Hostel</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', 'Noto Serif KR', serif;
+      background-color: #faf8f5;
+      color: #3a3a3a;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 30px;
+      background-color: #fff;
+      border-bottom: 1px solid #e8e0d8;
+    }
+
+    .logo {
+      width: 140px;
+      height: auto;
+      margin-bottom: 16px;
+    }
+
+    .header-title {
+      text-align: center;
+    }
+
+    .header-title .kr {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      color: #2c2c2c;
+    }
+
+    .header-title .en {
+      font-size: 0.95rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      color: #8a7e72;
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+
+    /* Tagline */
+    .tagline {
+      text-align: center;
+      padding: 50px 20px 10px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .tagline .main-copy {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #2c2c2c;
+      line-height: 1.8;
+      letter-spacing: 0.05em;
+      margin-bottom: 14px;
+    }
+
+    .tagline .sub-copy {
+      font-size: 0.95rem;
+      color: #8a7e72;
+      line-height: 1.9;
+      letter-spacing: 0.02em;
+    }
+
+    /* Room Description */
+    .room-desc {
+      text-align: center;
+      font-size: 0.88rem;
+      color: #8a7e72;
+      line-height: 1.7;
+      padding: 4px 24px 10px;
+      letter-spacing: 0.01em;
+    }
+
+    /* Rooms Section */
+    .rooms {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 50px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .room-card {
+      flex: 1;
+      min-width: 300px;
+      max-width: 540px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .room-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .room-name {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 18px 0 6px;
+      letter-spacing: 0.1em;
+      color: #2c2c2c;
+    }
+
+    /* Booking Links */
+    .booking-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      padding: 14px 20px 22px;
+    }
+
+    .booking-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 24px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .booking-links a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-airbnb {
+      background-color: #FF5A5F;
+      color: #fff;
+    }
+
+    .btn-booking {
+      background-color: #003B95;
+      color: #fff;
+    }
+
+    .btn-naver {
+      background-color: #03C75A;
+      color: #fff;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #e8e0d8;
+    }
+
+    /* Responsive */
+    @media (max-width: 720px) {
+      .rooms {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        padding: 30px 16px;
+      }
+
+      .header-title .kr {
+        font-size: 1.5rem;
+      }
+
+      .booking-links {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <img src="arangjae_logo2.jpeg" alt="아랑재 로고" class="logo">
+  </header>
+
+  <section class="tagline">
+    <p class="main-copy">
+      머무는 것만으로 쉬어지는 곳,<br>아랑재에서 느린 하루를 선물하세요.
+    </p>
+    <p class="sub-copy">
+      따뜻한 나무결 아래 가족과 함께하는 아침,<br>
+      고요한 빛이 스미는 마루 위의 사색.<br>
+      일상에서 한 발짝 물러나, 나만의 시간을 만나는 곳.
+    </p>
+  </section>
+
+  <section class="rooms">
+    <!-- 아라 (2층) -->
+    <div class="room-card">
+      <img src="web2f.png" alt="아라 (2층)">
+      <div class="room-name">아라 (2층)</div>
+      <p class="room-desc">온기 가득한 우드톤 공간에서<br>사랑하는 사람들과 나누는 소소한 일상</p>
+      <div class="booking-links">
+        <a href="https://www.airbnb.co.kr/rooms/1649288534400052206?unique_share_id=3ec8e765-0502-49b8-a327-0a3bf6220aba&viralityEntryPoint=1&s=76"
+          target="_blank" class="btn-airbnb">Airbnb</a>
+        <a href="https://www.booking.com/Share-4AtHsR" target="_blank" class="btn-booking">Booking.com</a>
+        <a href="https://search.naver.com/p/crd/rd?m=1&px=487&py=490&sx=487&sy=490&vw=1306&vh=725&bw=728&bh=564&bx=414&by=337&p=jOzQndqo6DssslF%2FLqV-206604&q=아랑재&ie=utf8&rev=1&ssc=tab.nx.all&f=nexearch&w=nexearch&s=J7xdvejZkTpl1w1TBQcVk9EZ&time=1776082871367&abt=%5B%7B%22eid%22%3A%22N-AD-RANK-26-PWLSHP%22%2C%22vid%22%3A%224%22%7D%2C%7B%22eid%22%3A%22NX-TAB-VDO-26%22%2C%22vid%22%3A%226%22%7D%2C%7B%22eid%22%3A%22NS-NPS-RANK-26%22%2C%22vid%22%3A%225%22%7D%5D&a=loc_plc.tit&r=2&i=2049206837&u=https%3A%2F%2Fmap.naver.com%2Fp%2Fsearch%2F%25EC%2595%2584%25EB%259E%2591%25EC%259E%25AC%2Fplace%2F2049206837%3FplacePath%3D%253Fbk_query%253D%2525EC%252595%252584%2525EB%25259E%252591%2525EC%25259E%2525AC%2526entry%253Dpll%2526from%253Dnx%2526fromNxList%253Dtrue%26placeSearchOption%3Dbk_query%253D%2525EC%252595%252584%2525EB%25259E%252591%2525EC%25259E%2525AC%2526entry%253Dpll%2526fromNxList%253Dtrue%2526x%253D127.046434%2526y%253D37.483742%26searchType%3Dplace&cr=1"
+          target="_blank" class="btn-naver">네이버플레이스</a>
+      </div>
+    </div>
+
+    <!-- 마루 (3층) -->
+    <div class="room-card">
+      <img src="web3f.png" alt="마루 (3층)">
+      <div class="room-name">마루 (3층)</div>
+      <p class="room-desc">고요한 빛이 내려앉는 마루 위에서<br>오롯이 나에게 집중하는 시간</p>
+      <div class="booking-links">
+        <a href="https://www.airbnb.co.kr/rooms/1649530929908799202?unique_share_id=4805716f-d09f-4657-8f5e-5a5a24391c4e&viralityEntryPoint=1&s=76"
+          target="_blank" class="btn-airbnb">Airbnb</a>
+        <a href="https://www.booking.com/Share-4AtHsR" target="_blank" class="btn-booking">Booking.com</a>
+        <a href="https://search.naver.com/p/crd/rd?m=1&px=487&py=490&sx=487&sy=490&vw=1306&vh=725&bw=728&bh=564&bx=414&by=337&p=jOzQndqo6DssslF%2FLqV-206604&q=아랑재&ie=utf8&rev=1&ssc=tab.nx.all&f=nexearch&w=nexearch&s=J7xdvejZkTpl1w1TBQcVk9EZ&time=1776082871367&abt=%5B%7B%22eid%22%3A%22N-AD-RANK-26-PWLSHP%22%2C%22vid%22%3A%224%22%7D%2C%7B%22eid%22%3A%22NX-TAB-VDO-26%22%2C%22vid%22%3A%226%22%7D%2C%7B%22eid%22%3A%22NS-NPS-RANK-26%22%2C%22vid%22%3A%225%22%7D%5D&a=loc_plc.tit&r=2&i=2049206837&u=https%3A%2F%2Fmap.naver.com%2Fp%2Fsearch%2F%25EC%2595%2584%25EB%259E%2591%25EC%259E%25AC%2Fplace%2F2049206837%3FplacePath%3D%253Fbk_query%253D%2525EC%252595%252584%2525EB%25259E%252591%2525EC%25259E%2525AC%2526entry%253Dpll%2526from%253Dnx%2526fromNxList%253Dtrue%26placeSearchOption%3Dbk_query%253D%2525EC%252595%252584%2525EB%25259E%252591%2525EC%25259E%2525AC%2526entry%253Dpll%2526fromNxList%253Dtrue%2526x%253D127.046434%2526y%253D37.483742%26searchType%3Dplace&cr=1"
+          target="_blank" class="btn-naver">네이버플레이스</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 아랑재 Arangjae Hostel
+  </footer>
+
+</body>
+
+</html>
