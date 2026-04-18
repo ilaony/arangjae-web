@@ -20,12 +20,44 @@
 
     /* Header */
     header {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 40px 20px 30px;
       background-color: #fff;
       border-bottom: 1px solid #e8e0d8;
+    }
+
+    /* Language Toggle */
+    .lang-toggle {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      display: flex;
+      border: 1px solid #d5cec6;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .lang-toggle button {
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      font-family: inherit;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: #8a7e72;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .lang-toggle button.active {
+      background: #3a3a3a;
+      color: #fff;
+    }
+
+    .lang-toggle button:not(.active):hover {
+      background: #f0ece7;
     }
 
     .logo {
@@ -196,17 +228,21 @@
 <body>
 
   <header>
+    <div class="lang-toggle">
+      <button class="active" onclick="setLang('ko')">KR</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
     <img src="arangjae_logo2.jpeg" alt="아랑재 로고" class="logo">
   </header>
 
   <section class="tagline">
-    <p class="main-copy">
-      머무는 것만으로 쉬어지는 곳,<br>아랑재에서 느린 하루를 선물하세요.
+    <p class="main-copy" data-lang
+      data-ko="머무는 것만으로 쉬어지는 곳,<br>아랑재에서 느린 하루를 선물하세요."
+      data-en="A place where rest finds you.<br>Gift yourself a slow day at Arangjae.">
     </p>
-    <p class="sub-copy">
-      따뜻한 나무결 아래 가족과 함께하는 아침,<br>
-      고요한 빛이 스미는 마루 위의 사색.<br>
-      일상에서 한 발짝 물러나, 나만의 시간을 만나는 곳.
+    <p class="sub-copy" data-lang
+      data-ko="따뜻한 나무결 아래 가족과 함께하는 아침,<br>고요한 빛이 스미는 마루 위의 사색.<br>일상에서 한 발짝 물러나, 나만의 시간을 만나는 곳."
+      data-en="A warm morning with family under soft wooden tones,<br>quiet light settling on the maru for a moment of reflection.<br>Step away from the everyday and find time for yourself.">
     </p>
   </section>
 
@@ -214,8 +250,10 @@
     <!-- 아라 (2층) -->
     <div class="room-card">
       <img src="web2f.png" alt="아라 (2층)">
-      <div class="room-name">아라 (2층)</div>
-      <p class="room-desc">온기 가득한 우드톤 공간에서<br>사랑하는 사람들과 나누는 소소한 일상</p>
+      <div class="room-name" data-lang data-ko="아라 (2층)" data-en="Ara (2F)"></div>
+      <p class="room-desc" data-lang
+        data-ko="온기 가득한 우드톤 공간에서<br>사랑하는 사람들과 나누는 소소한 일상"
+        data-en="Simple joys shared with loved ones<br>in a warm, wood-toned space"></p>
       <div class="booking-links">
         <a href="https://www.airbnb.co.kr/rooms/1649288534400052206?unique_share_id=3ec8e765-0502-49b8-a327-0a3bf6220aba&viralityEntryPoint=1&s=76"
           target="_blank" class="btn-airbnb">Airbnb</a>
@@ -228,8 +266,10 @@
     <!-- 마루 (3층) -->
     <div class="room-card">
       <img src="web3f.png" alt="마루 (3층)">
-      <div class="room-name">마루 (3층)</div>
-      <p class="room-desc">고요한 빛이 내려앉는 마루 위에서<br>오롯이 나에게 집중하는 시간</p>
+      <div class="room-name" data-lang data-ko="마루 (3층)" data-en="Maru (3F)"></div>
+      <p class="room-desc" data-lang
+        data-ko="고요한 빛이 내려앉는 마루 위에서<br>오롯이 나에게 집중하는 시간"
+        data-en="On the maru where quiet light settles,<br>a moment to focus solely on yourself"></p>
       <div class="booking-links">
         <a href="https://www.airbnb.co.kr/rooms/1649530929908799202?unique_share_id=4805716f-d09f-4657-8f5e-5a5a24391c4e&viralityEntryPoint=1&s=76"
           target="_blank" class="btn-airbnb">Airbnb</a>
@@ -243,6 +283,19 @@
   <footer>
     &copy; 2026 아랑재 Arangjae Hostel
   </footer>
+
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('[data-lang]').forEach(function (el) {
+        el.innerHTML = el.getAttribute('data-' + lang);
+      });
+      document.querySelectorAll('.lang-toggle button').forEach(function (btn) {
+        btn.classList.toggle('active', btn.textContent === (lang === 'ko' ? 'KR' : 'EN'));
+      });
+      document.documentElement.lang = lang;
+    }
+    setLang('ko');
+  </script>
 
 </body>
 
