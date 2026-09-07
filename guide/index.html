@@ -264,6 +264,18 @@
     }
     .steps figure { margin-top: 9px; margin-bottom: 0; }
 
+    /* ---------- appliance diagrams ---------- */
+    .diagram { margin: 0 0 16px; }
+    .diagram-scroll {
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--line); border-radius: 12px; background: #fff; padding: 12px 10px;
+    }
+    .diagram-scroll::-webkit-scrollbar { height: 5px; }
+    .diagram-scroll::-webkit-scrollbar-thumb { background: #d5cec6; border-radius: 3px; }
+    .diagram-scroll img { height: 200px; width: auto; max-width: none; display: block; }
+    .diagram-cap { margin-top: 7px; font-size: 0.78rem; color: var(--muted); text-align: center; }
+    .diagram-cap::before { content: '↔ '; }
+
     .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
     .gallery figure { margin: 0; }
 
@@ -671,15 +683,22 @@
         <details class="sub">
           <summary>❄️ <span class="ko">에어컨 · 난방</span><span class="en">Air Conditioner &amp; Heater</span></summary>
           <div class="sub-body">
+            <figure>
+              <img loading="lazy" src="img/appl-ac-remote.png" alt="Air conditioner remote control diagram">
+              <figcaption>
+                <span class="ko">번호는 아래 설명과 같습니다. 이미지를 누르면 크게 볼 수 있습니다.</span>
+                <span class="en">The numbers match the list below. Tap the image to enlarge.</span>
+              </figcaption>
+            </figure>
             <ol>
               <li><strong><span class="ko">전원</span><span class="en">Power</span></strong> — <span class="ko">에어컨 전원을 켜고 끕니다.</span><span class="en">Turns the air conditioner on or off.</span></li>
-              <li><strong><span class="ko">운전선택</span><span class="en">Mode Selection</span></strong> — <span class="ko">냉방, 제습 등 운전 모드를 선택합니다.</span><span class="en">Selects modes such as Cooling or Dehumidification.</span></li>
+              <li><strong><span class="ko">운전선택</span><span class="en">Mode Selection</span></strong> — <span class="ko">냉방이나 난방 같은 운전 모드를 선택할 수 있습니다.</span><span class="en">Selects operation modes such as Cooling or Heating.</span></li>
               <li><strong><span class="ko">상하바람</span><span class="en">Vertical Airflow</span></strong> — <span class="ko">누르면 상하 바람이 시작됩니다. 원하는 위치에 고정하려면 한 번 더 누르세요.</span><span class="en">Press to start the vertical swing; press again to fix the airflow in place.</span></li>
               <li><strong><span class="ko">AI 바람</span><span class="en">AI Airflow</span></strong> — <span class="ko">주변 환경을 분석해 가장 효율적으로 작동합니다.</span><span class="en">Analyses the room and runs in the most efficient mode automatically.</span></li>
               <li><strong><span class="ko">좌우바람</span><span class="en">Horizontal Airflow</span></strong> — <span class="ko">누르면 좌우 바람이 시작됩니다. 고정하려면 한 번 더 누르세요.</span><span class="en">Press to start the horizontal swing; press again to fix it in place.</span></li>
               <li><strong><span class="ko">온도</span><span class="en">Temperature</span></strong> — <span class="ko">희망 온도를 조절합니다.</span><span class="en">Adjusts the target temperature.</span></li>
               <li><strong><span class="ko">바람세기</span><span class="en">Fan Speed</span></strong> — <span class="ko">자동풍 · 미약풍 · 약풍 · 중풍 · 강풍으로 조절합니다.</span><span class="en">Auto, Faint, Low, Medium or High.</span></li>
-              <li><strong><span class="ko">절전</span><span class="en">Energy Saving</span></strong> — <span class="ko">쾌적절전 기능을 설정합니다.</span><span class="en">Sets the Comfortable Saving mode to reduce power use.</span></li>
+              <li><strong><span class="ko">절전</span><span class="en">Energy Saving</span></strong> — <span class="ko">쾌적절전 기능을 설정합니다.</span><span class="en">Sets the Energy Saving function to reduce power consumption.</span></li>
               <li><strong><span class="ko">파워 / 소프트</span><span class="en">Power / Soft</span></strong> — <span class="ko">파워바람, 아이스쿨파워, 소프트바람을 설정합니다.</span><span class="en">Power Air, Ice Cool Power and Soft Air.</span></li>
               <li><strong><span class="ko">바람선택</span><span class="en">Airflow Selection</span></strong> — <span class="ko">에어가이드 → 고천장 → 자동온도 → 스터디 → 매너 → 롱파워 → 숲속 → 해제 순으로 전환됩니다.</span><span class="en">Cycles through Air Guide → High Ceiling → Auto Temp → Study → Manner → Long Power → Forest → Off.</span></li>
               <li><strong><span class="ko">취침</span><span class="en">Sleep</span></strong> — <span class="ko">취침예약(자동 종료) 기능을 설정합니다.</span><span class="en">Sets the sleep timer for automatic shut-off.</span></li>
@@ -722,6 +741,10 @@
           <summary>🧺 <span class="ko">세탁기</span><span class="en">Washing Machine</span></summary>
           <div class="sub-body">
             <h4><span class="ko">주요 버튼</span><span class="en">Main buttons</span></h4>
+            <div class="diagram">
+              <div class="diagram-scroll"><img loading="lazy" src="img/appl-washer-panel.png" alt="Washing machine control panel diagram"></div>
+              <p class="diagram-cap"><span class="ko">옆으로 밀어서 조작부 전체를 확인하세요</span><span class="en">Swipe sideways to see the whole control panel</span></p>
+            </div>
             <ul>
               <li><strong>01</strong> <span class="ko">전원 — 세탁기를 켜고 끕니다.</span><span class="en">Power — turns the machine on or off.</span></li>
               <li><strong>02</strong> <span class="ko">세탁기 — 세탁기 기능을 선택합니다.</span><span class="en">Washer — selects the washing machine functions.</span></li>
@@ -729,6 +752,9 @@
               <li><strong>04</strong> <span class="ko">동작/일시정지 — 코스 선택 후 <em>길게 눌러</em> 세탁을 시작합니다.</span><span class="en">Start/Pause — <em>long-press</em> to start after selecting a cycle.</span></li>
             </ul>
             <h4><span class="ko">세제 및 유연제</span><span class="en">Detergent &amp; softener</span></h4>
+            <figure>
+              <img loading="lazy" src="img/appl-washer-drawer.png" alt="Detergent drawer: detergent on the left, fabric softener on the right">
+            </figure>
             <p>
               <span class="ko">세탁기 왼쪽 상단의 세제함을 당겨서 넣어 주세요. <strong>세제는 왼쪽, 섬유유연제는 오른쪽</strong>입니다. 둘 다 최대선(MAX)을 넘기지 마세요.</span>
               <span class="en">Pull out the drawer at the top left. <strong>Detergent goes on the left, fabric softener on the right.</strong> Never exceed the MAX line.</span>
@@ -743,7 +769,7 @@
                 · 세탁 후에는 문을 살짝 열어 내부를 자연 건조해 주세요.</span>
               <span class="en"><strong>Safety</strong><br>
                 · Check pockets for coins, keys and hairpins before washing.<br>
-                · Never wash waterproof items (skiwear, rain covers) or electric blankets.<br>
+                · Do not wash waterproof items (skiwear, rain covers), carpets, or electric blankets.<br>
                 · Push laundry fully inside so it is not caught in the door seal.<br>
                 · Leave the door ajar after washing to air-dry the drum and prevent odours.</span>
             </div>
@@ -754,6 +780,10 @@
           <summary>🌬️ <span class="ko">건조기</span><span class="en">Dryer</span></summary>
           <div class="sub-body">
             <h4><span class="ko">주요 버튼</span><span class="en">Main buttons</span></h4>
+            <div class="diagram">
+              <div class="diagram-scroll"><img loading="lazy" src="img/appl-dryer-panel.png" alt="Dryer control panel diagram"></div>
+              <p class="diagram-cap"><span class="ko">옆으로 밀어서 조작부 전체를 확인하세요</span><span class="en">Swipe sideways to see the whole control panel</span></p>
+            </div>
             <ul>
               <li><strong>01</strong> <span class="ko">전원 — 건조기를 켜고 끕니다.</span><span class="en">Power — turns the dryer on or off.</span></li>
               <li><strong>02</strong> <span class="ko">건조기 — 건조기 기능을 선택합니다.</span><span class="en">Dryer — selects the dryer functions.</span></li>
@@ -762,6 +792,10 @@
             </ul>
             <h4><span class="ko">간단 사용법</span><span class="en">Quick steps</span></h4>
             <p><span class="ko">전원 켜기 → 건조기 버튼 선택 → 다이얼로 코스 선택 → 동작 버튼 길게 누르기</span><span class="en">Power on → press the Dryer button → select a cycle with the dial → long-press Start</span></p>
+            <div class="note">
+              <span class="ko">대부분의 세탁물에는 <strong>표준건조</strong> 또는 <strong>AI맞춤건조</strong>를 권장합니다.</span>
+              <span class="en"><strong>Normal Drying</strong> or <strong>AI Optimal Drying</strong> is recommended for most loads.</span>
+            </div>
             <h4><span class="ko">필터 청소 및 관리</span><span class="en">Filter care</span></h4>
             <ul>
               <li><span class="ko">사용 후에는 반드시 필터의 먼지를 제거해 주세요.</span><span class="en">Clean the lint filter after every use.</span></li>
