@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="ko" data-lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#faf8f5">
+  <title>아랑재 게스트 가이드 · Arangjae Guest Guide</title>
+  <link rel="preload" as="image" href="img/hero.jpg" media="(max-width: 719px)">
+  <link rel="preload" as="image" href="img/hero-wide.jpg" media="(min-width: 720px)">
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --card: #ffffff;
+      --ink: #2c2c2c;
+      --body: #4a4441;
+      --muted: #8a7e72;
+      --line: #e8e0d8;
+      --accent: #7a6a58;
+      --warn-bg: #fdf4ef;
+      --warn-line: #e8c9b3;
+      --warn-ink: #a35a2a;
+      --radius: 14px;
+      --sans: 'Apple SD Gothic Neo', 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --serif: 'Georgia', 'Noto Serif KR', serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 68px; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--body);
+      font-size: 16px;
+      line-height: 1.72;
+      -webkit-text-size-adjust: 100%;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    /* ---------- language switching ---------- */
+    html[data-lang="ko"] .en,
+    html[data-lang="en"] .ko { display: none !important; }
+
+    /* ---------- layout ---------- */
+    .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px 64px; }
+
+    /* ---------- top bar ---------- */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+    .topbar.solid {
+      background: rgba(250, 248, 245, 0.94);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom-color: var(--line);
+    }
+    .topbar-inner {
+      max-width: 640px; margin: 0 auto; padding: 12px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .brand {
+      font-family: var(--serif); font-size: 1.05rem; font-weight: 700;
+      letter-spacing: 0.14em; color: #fff; text-decoration: none;
+      text-shadow: 0 1px 12px rgba(0, 0, 0, 0.45);
+      transition: color 0.25s ease;
+    }
+    .brand small { display: block; font-size: 0.6rem; letter-spacing: 0.2em; color: rgba(255, 255, 255, 0.72); font-weight: 400; transition: color 0.25s ease; }
+    .topbar.solid .brand { color: var(--ink); text-shadow: none; }
+    .topbar.solid .brand small { color: var(--muted); }
+
+    .lang-toggle {
+      display: flex; border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 20px;
+      overflow: hidden; flex: none; background: rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      transition: border-color 0.25s ease, background 0.25s ease;
+    }
+    .lang-toggle button {
+      padding: 6px 13px; font-size: 0.78rem; font-family: inherit; font-weight: 600;
+      border: none; cursor: pointer; background: transparent; color: rgba(255, 255, 255, 0.78);
+      transition: background 0.15s, color 0.15s;
+    }
+    .lang-toggle button[aria-pressed="true"] { background: #fff; color: #2c2c2c; }
+    .topbar.solid .lang-toggle { border-color: #d5cec6; background: transparent; }
+    .topbar.solid .lang-toggle button { color: var(--muted); }
+    .topbar.solid .lang-toggle button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+    /* ---------- hero ---------- */
+    .hero {
+      position: relative; height: 64svh; min-height: 430px; max-height: 680px;
+      display: flex; align-items: flex-end; overflow: hidden; background: #241d18;
+    }
+    @supports not (height: 64svh) { .hero { height: 64vh; } }
+
+    .hero > picture { position: absolute; inset: 0; display: block; }
+    .hero > picture img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 45%;
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(26, 20, 16, 0.46) 0%, rgba(26, 20, 16, 0.1) 16%, rgba(26, 20, 16, 0) 32%),
+        linear-gradient(to top, rgba(26, 20, 16, 0.88) 0%, rgba(26, 20, 16, 0.8) 22%, rgba(26, 20, 16, 0.6) 40%, rgba(26, 20, 16, 0.3) 58%, rgba(26, 20, 16, 0.06) 78%);
+    }
+
+    .hero-inner {
+      position: relative; z-index: 2; width: 100%; max-width: 640px;
+      margin: 0 auto; padding: 0 24px calc(26px + env(safe-area-inset-bottom)); color: #fff;
+    }
+    .hero .eyebrow {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.34em;
+      color: rgba(255, 255, 255, 0.66); text-transform: uppercase; margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-family: var(--serif); font-size: 1.92rem; line-height: 1.36;
+      color: #fff; letter-spacing: 0.01em; text-shadow: 0 2px 22px rgba(0, 0, 0, 0.4);
+    }
+    .hero .lede {
+      margin-top: 12px; font-size: 0.9rem; line-height: 1.7;
+      color: rgba(255, 255, 255, 0.8); text-shadow: 0 1px 14px rgba(0, 0, 0, 0.45);
+    }
+
+    .stay-times { display: flex; gap: 10px; margin-bottom: 12px; }
+    .stay-times div {
+      flex: 1; background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 13px 10px; text-align: center;
+    }
+    .stay-times .label { font-size: 0.68rem; letter-spacing: 0.14em; color: var(--muted); text-transform: uppercase; }
+    .stay-times .value { font-family: var(--serif); font-size: 1.18rem; font-weight: 700; color: var(--ink); margin-top: 2px; }
+
+    .scrollcue {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      margin-top: 26px; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.28em;
+      color: rgba(255, 255, 255, 0.6); text-transform: uppercase; text-decoration: none;
+      padding-left: 0.28em;
+    }
+    .scrollcue i { display: block; width: 1px; height: 26px; background: rgba(255, 255, 255, 0.5); transform-origin: top; animation: cue 1.9s ease-in-out infinite; }
+    @keyframes cue { 0%, 100% { transform: scaleY(0.35); opacity: 0.35; } 50% { transform: scaleY(1); opacity: 0.95; } }
+    @media (prefers-reduced-motion: reduce) { .scrollcue i { animation: none; } }
+
+    .below-hero { padding-top: 26px; }
+
+    /* ---------- quick actions ---------- */
+    .quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0 26px; }
+    .quick a, .quick button {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 12px 4px; font-family: inherit; font-size: 0.72rem; font-weight: 600;
+      color: var(--body); text-decoration: none; cursor: pointer; line-height: 1.3; text-align: center;
+    }
+    .quick .ico { font-size: 1.22rem; line-height: 1; }
+    .quick a:active, .quick button:active { background: #f3efe9; }
+    .quick button.done { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+    /* ---------- section nav ---------- */
+    .secnav { display: flex; gap: 7px; overflow-x: auto; padding: 0 0 22px; scrollbar-width: none; }
+    .secnav::-webkit-scrollbar { display: none; }
+    .secnav a {
+      flex: none; padding: 7px 14px; border-radius: 20px; background: var(--card);
+      border: 1px solid var(--line); font-size: 0.8rem; font-weight: 600;
+      color: var(--body); text-decoration: none; white-space: nowrap;
+    }
+
+    /* ---------- sections ---------- */
+    .sec { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 12px; overflow: hidden; }
+    .sec > summary {
+      list-style: none; cursor: pointer; padding: 17px 18px;
+      display: flex; align-items: center; gap: 11px;
+      font-family: var(--serif); font-size: 1.06rem; font-weight: 700; color: var(--ink);
+    }
+    .sec > summary::-webkit-details-marker { display: none; }
+    .sec > summary .ico { font-size: 1.15rem; }
+    .sec > summary::after {
+      content: '⌄'; margin-left: auto; font-size: 1.1rem; color: var(--muted);
+      transform: translateY(-3px); transition: transform 0.2s;
+    }
+    .sec[open] > summary::after { transform: translateY(2px) rotate(180deg); }
+    .sec[open] > summary { border-bottom: 1px solid var(--line); }
+    .sec-body { padding: 18px; }
+
+    h3 {
+      font-size: 0.95rem; font-weight: 700; color: var(--ink);
+      margin: 24px 0 9px; letter-spacing: 0.01em;
+    }
+    h3:first-child { margin-top: 0; }
+    h4 { font-size: 0.88rem; font-weight: 700; color: var(--accent); margin: 18px 0 6px; }
+
+    p { margin-bottom: 10px; font-size: 0.92rem; }
+    p:last-child { margin-bottom: 0; }
+
+    ul, ol { margin: 0 0 12px 1.15em; font-size: 0.92rem; }
+    li { margin-bottom: 6px; }
+    li:last-child { margin-bottom: 0; }
+
+    a { color: var(--accent); }
+
+    /* ---------- info rows ---------- */
+    .kv { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-bottom: 14px; }
+    .kv div { display: flex; gap: 12px; padding: 11px 13px; font-size: 0.88rem; border-bottom: 1px solid var(--line); }
+    .kv div:last-child { border-bottom: none; }
+    .kv dt { flex: none; width: 84px; color: var(--muted); font-weight: 600; }
+    .kv dd { flex: 1; color: var(--ink); }
+
+    /* ---------- copy field ---------- */
+    .copyrow { display: flex; gap: 8px; align-items: stretch; margin-bottom: 12px; }
+    .copyrow .val {
+      flex: 1; background: #f6f2ec; border: 1px solid var(--line); border-radius: 10px;
+      padding: 11px 13px; font-size: 0.93rem; color: var(--ink); font-weight: 600;
+    }
+    .copyrow .val small { display: block; font-weight: 400; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; }
+    .copybtn {
+      flex: none; border: 1px solid var(--line); background: var(--card); border-radius: 10px;
+      padding: 0 14px; font-family: inherit; font-size: 0.8rem; font-weight: 700; color: var(--body); cursor: pointer;
+    }
+    .copybtn:active { background: #f3efe9; }
+    .copybtn.done { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+    /* ---------- buttons ---------- */
+    .btnrow { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 15px; border-radius: 22px; text-decoration: none;
+      font-size: 0.82rem; font-weight: 600; border: 1px solid var(--line);
+      background: var(--card); color: var(--body);
+    }
+    .btn.primary { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+    /* ---------- callouts ---------- */
+    .note, .warn {
+      border-radius: 12px; padding: 13px 15px; font-size: 0.87rem; margin-bottom: 14px; line-height: 1.65;
+    }
+    .note { background: #f6f2ec; border: 1px solid var(--line); color: var(--body); }
+    .warn { background: var(--warn-bg); border: 1px solid var(--warn-line); color: var(--warn-ink); }
+    .warn strong, .note strong { color: inherit; }
+    .note :last-child, .warn :last-child { margin-bottom: 0; }
+
+    /* ---------- route cards ---------- */
+    .route { border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+    .route .title { font-weight: 700; color: var(--ink); font-size: 0.92rem; margin-bottom: 3px; }
+    .route .path { font-size: 0.87rem; color: var(--body); }
+    .route .mins { display: inline-block; margin-top: 7px; font-size: 0.76rem; font-weight: 700; color: var(--accent); background: #f3efe9; border-radius: 12px; padding: 3px 10px; }
+
+    /* ---------- images ---------- */
+    figure { margin: 0 0 16px; }
+    figure img {
+      width: 100%; height: auto; display: block; border-radius: 12px;
+      border: 1px solid var(--line); background: #f6f2ec; cursor: zoom-in;
+    }
+    figcaption { margin-top: 7px; font-size: 0.79rem; color: var(--muted); text-align: center; }
+
+    .steps { counter-reset: step; list-style: none; margin-left: 0; }
+    .steps > li { counter-increment: step; position: relative; padding-left: 32px; margin-bottom: 18px; }
+    .steps > li::before {
+      content: counter(step); position: absolute; left: 0; top: 1px;
+      width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: #fff;
+      font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
+    }
+    .steps figure { margin-top: 9px; margin-bottom: 0; }
+
+    .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .gallery figure { margin: 0; }
+
+    /* ---------- nested accordion ---------- */
+    .sub { border: 1px solid var(--line); border-radius: 12px; margin-bottom: 9px; overflow: hidden; }
+    .sub > summary {
+      list-style: none; cursor: pointer; padding: 13px 15px;
+      font-size: 0.9rem; font-weight: 700; color: var(--ink);
+      display: flex; align-items: center; gap: 9px;
+    }
+    .sub > summary::-webkit-details-marker { display: none; }
+    .sub > summary::after { content: '⌄'; margin-left: auto; color: var(--muted); transform: translateY(-3px); transition: transform 0.2s; }
+    .sub[open] > summary::after { transform: translateY(2px) rotate(180deg); }
+    .sub[open] > summary { border-bottom: 1px solid var(--line); background: #faf8f5; }
+    .sub-body { padding: 15px; }
+    .sub-body ol, .sub-body ul { margin-bottom: 0; }
+
+    /* ---------- place list ---------- */
+    .places { list-style: none; margin: 0; }
+    .places li { border-bottom: 1px solid var(--line); margin: 0; }
+    .places li:last-child { border-bottom: none; }
+    .places a {
+      display: flex; align-items: center; gap: 12px; padding: 12px 2px;
+      text-decoration: none; color: inherit;
+    }
+    .places .info { flex: 1; min-width: 0; }
+    .places .nm { display: block; font-size: 0.9rem; font-weight: 700; color: var(--ink); }
+    .places .meta { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+    .places .go { flex: none; font-size: 0.95rem; color: var(--muted); }
+
+    /* ---------- emergency ---------- */
+    .tel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+    .tel-grid a {
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+      padding: 14px 6px; border-radius: 12px; text-decoration: none;
+      border: 1px solid var(--warn-line); background: var(--warn-bg); color: var(--warn-ink);
+    }
+    .tel-grid .num { font-family: var(--serif); font-size: 1.35rem; font-weight: 700; }
+    .tel-grid .who { font-size: 0.72rem; font-weight: 600; text-align: center; line-height: 1.35; }
+
+    /* ---------- footer ---------- */
+    footer { text-align: center; padding: 34px 16px 10px; font-size: 0.76rem; color: #b3aaa1; }
+
+    /* ---------- lightbox ---------- */
+    #lightbox {
+      position: fixed; inset: 0; z-index: 100; display: none;
+      background: rgba(20, 18, 16, 0.94); padding: 16px;
+      align-items: center; justify-content: center;
+    }
+    #lightbox.on { display: flex; }
+    #lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 6px; }
+    #lightbox .close {
+      position: absolute; top: max(14px, env(safe-area-inset-top)); right: 16px;
+      width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+      background: rgba(255, 255, 255, 0.16); color: #fff; font-size: 1.2rem; line-height: 1;
+    }
+
+    @media (min-width: 720px) {
+      .hero { height: 74vh; }
+      .hero h1 { font-size: 2.3rem; }
+    }
+
+    @media (max-width: 380px) {
+      .quick { grid-template-columns: repeat(2, 1fr); }
+      .tel-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script>
+    (function () {
+      var l = null;
+      try { l = localStorage.getItem('arangjae-guide-lang'); } catch (e) { }
+      if (l !== 'ko' && l !== 'en') {
+        l = (navigator.language || 'en').toLowerCase().indexOf('ko') === 0 ? 'ko' : 'en';
+      }
+      document.documentElement.setAttribute('data-lang', l);
+      document.documentElement.setAttribute('lang', l);
+    })();
+  </script>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top">아랑재<small>ARANGJAE GUIDE</small></a>
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-setlang="ko" aria-pressed="true">KR</button>
+        <button type="button" data-setlang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero" id="top">
+    <picture>
+      <source media="(min-width: 720px)" srcset="img/hero-wide.jpg">
+      <img src="img/hero.jpg" alt="아랑재 객실 내부" fetchpriority="high" decoding="async">
+    </picture>
+    <div class="hero-inner">
+      <div class="eyebrow">Guest Guide</div>
+      <h1>
+        <span class="ko">아랑재에 오신 것을<br>환영합니다</span>
+        <span class="en">Welcome to<br>Arangjae Hostel</span>
+      </h1>
+      <p class="lede">
+        <span class="ko">편안한 머무름을 위한 안내를 모았습니다.</span>
+        <span class="en">Everything you need for a comfortable stay.</span>
+      </p>
+
+      <a class="scrollcue" href="#start">Scroll<i></i></a>
+    </div>
+  </section>
+
+  <div class="wrap below-hero" id="start">
+
+    <div class="stay-times">
+      <div>
+        <div class="label">Check-In</div>
+        <div class="value">4:00 PM</div>
+      </div>
+      <div>
+        <div class="label">Check-Out</div>
+        <div class="value">11:00 AM</div>
+      </div>
+    </div>
+
+    <nav class="quick">
+      <button type="button" class="copybtn-plain" data-copy="서울특별시 중구 마른내로12길 7-1">
+        <span class="ico">📋</span>
+        <span class="ko">주소 복사</span><span class="en">Copy address</span>
+      </button>
+      <a href="https://www.google.com/maps/search/?api=1&query=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EC%A4%91%EA%B5%AC%20%EB%A7%88%EB%A5%B8%EB%82%B4%EB%A1%9C12%EA%B8%B8%207-1" target="_blank" rel="noopener">
+        <span class="ico">🗺️</span>
+        <span class="ko">지도 열기</span><span class="en">Open map</span>
+      </a>
+      <button type="button" class="copybtn-plain" data-copy="arangjae1004*">
+        <span class="ico">📶</span>
+        <span class="ko">Wi-Fi 복사</span><span class="en">Copy Wi-Fi</span>
+      </button>
+      <a href="#contact">
+        <span class="ico">💬</span>
+        <span class="ko">문의하기</span><span class="en">Contact us</span>
+      </a>
+    </nav>
+
+    <nav class="secnav">
+      <a href="#directions"><span class="ko">오시는 길</span><span class="en">Getting here</span></a>
+      <a href="#parking"><span class="ko">주차</span><span class="en">Parking</span></a>
+      <a href="#wifi">Wi-Fi</a>
+      <a href="#appliances"><span class="ko">가전 사용법</span><span class="en">Appliances</span></a>
+      <a href="#waste"><span class="ko">쓰레기</span><span class="en">Waste</span></a>
+      <a href="#rules"><span class="ko">이용 규칙</span><span class="en">House rules</span></a>
+      <a href="#nearby"><span class="ko">주변 정보</span><span class="en">Nearby</span></a>
+      <a href="#emergency"><span class="ko">비상 안내</span><span class="en">Emergency</span></a>
+    </nav>
+
+    <!-- ============ DIRECTIONS ============ -->
+    <details class="sec" id="directions" open>
+      <summary><span class="ico">📍</span><span class="ko">오시는 길</span><span class="en">Getting Here</span></summary>
+      <div class="sec-body">
+
+        <h3><span class="ko">주소</span><span class="en">Address</span></h3>
+        <div class="copyrow">
+          <div class="val">
+            <small class="ko">한국어</small><small class="en">KOREAN</small>
+            서울특별시 중구 마른내로12길 7-1 (2층·3층)
+          </div>
+          <button type="button" class="copybtn" data-copy="서울특별시 중구 마른내로12길 7-1">
+            <span class="ko">복사</span><span class="en">Copy</span>
+          </button>
+        </div>
+        <div class="copyrow">
+          <div class="val">
+            <small>ENGLISH</small>
+            2F–3F, 7-1 Mareunnae-ro 12-gil, Jung-gu, Seoul
+          </div>
+          <button type="button" class="copybtn" data-copy="2F-3F, 7-1 Mareunnae-ro 12-gil, Jung-gu, Seoul, South Korea">
+            <span class="ko">복사</span><span class="en">Copy</span>
+          </button>
+        </div>
+        <div class="note ko">
+          택시를 타실 때는 한국어 주소를 보여 주시면 가장 정확합니다.
+        </div>
+        <div class="note en">
+          When taking a taxi, showing the Korean address is the most reliable way to get here.
+        </div>
+        <div class="btnrow">
+          <a class="btn primary" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EC%A4%91%EA%B5%AC%20%EB%A7%88%EB%A5%B8%EB%82%B4%EB%A1%9C12%EA%B8%B8%207-1">🗺️ Google Maps</a>
+          <a class="btn" target="_blank" rel="noopener" href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EC%A4%91%EA%B5%AC%20%EB%A7%88%EB%A5%B8%EB%82%B4%EB%A1%9C12%EA%B8%B8%207-1">🇰🇷 <span class="ko">네이버 지도</span><span class="en">Naver Map</span></a>
+        </div>
+
+        <h3><span class="ko">교통편</span><span class="en">Directions</span></h3>
+
+        <div class="route">
+          <div class="title"><span class="ko">지하철 · 을지로4가역 (2·5호선)</span><span class="en">Subway · Euljiro 4-ga Station (Line 2 · 5)</span></div>
+          <div class="path">
+            <span class="ko">8번 출구(엘리베이터) 또는 9번 출구(에스컬레이터) → 도보 → 아랑재</span>
+            <span class="en">Exit 8 (elevator) or Exit 9 (escalator) → walk → Arangjae</span>
+          </div>
+          <span class="mins"><span class="ko">도보 7분</span><span class="en">7 min walk</span></span>
+          <figure><img loading="lazy" src="img/route-euljiro4.jpg" alt="Euljiro 4-ga Station route map"></figure>
+        </div>
+
+        <div class="route">
+          <div class="title"><span class="ko">지하철 · 동대문역사문화공원역 (2·4·5호선)</span><span class="en">Subway · Dongdaemun History &amp; Culture Park Station (Line 2 · 4 · 5)</span></div>
+          <div class="path">
+            <span class="ko">6번 출구 → 도보 → 아랑재</span>
+            <span class="en">Exit 6 → walk → Arangjae</span>
+          </div>
+          <span class="mins"><span class="ko">도보 5분</span><span class="en">5 min walk</span></span>
+          <figure><img loading="lazy" src="img/route-ddp.jpg" alt="Dongdaemun History and Culture Park Station route map"></figure>
+        </div>
+
+        <div class="route">
+          <div class="title"><span class="ko">지하철 · 충무로역 (3·4호선)</span><span class="en">Subway · Chungmuro Station (Line 3 · 4)</span></div>
+          <div class="path">
+            <span class="ko">1번 출구(에스컬레이터) → 도보 → 아랑재</span>
+            <span class="en">Exit 1 (escalator) → walk → Arangjae</span>
+          </div>
+          <span class="mins"><span class="ko">도보 10분</span><span class="en">10 min walk</span></span>
+          <figure><img loading="lazy" src="img/route-chungmuro.jpg" alt="Chungmuro Station route map"></figure>
+        </div>
+
+        <div class="route">
+          <div class="title"><span class="ko">공항버스 6015</span><span class="en">Airport Bus 6015</span></div>
+          <div class="path">
+            <span class="ko">6015번 탑승 → 중구청·덕수중학교 정류장 하차 → 도보 → 아랑재</span>
+            <span class="en">Take Bus 6015 → get off at Jung-gu Office / Duksu Middle School stop → walk → Arangjae</span>
+          </div>
+          <span class="mins"><span class="ko">도보 5분</span><span class="en">5 min walk</span></span>
+          <figure><img loading="lazy" src="img/route-airportbus.jpg" alt="Airport bus 6015 route map"></figure>
+        </div>
+
+        <h3><span class="ko">을지로4가역에서 걸어오기</span><span class="en">Walking from Euljiro 4-ga Station</span></h3>
+        <details class="sub">
+          <summary><span class="ko">사진으로 보는 상세 안내</span><span class="en">Step-by-step with photos</span></summary>
+          <div class="sub-body">
+            <figure>
+              <img loading="lazy" src="img/walk-map.jpg" alt="Walking route overview map">
+              <figcaption><span class="ko">전체 도보 경로</span><span class="en">Overall walking route</span></figcaption>
+            </figure>
+            <ol class="steps">
+              <li>
+                <span class="ko">짐이 많으시다면 8번 출구로 나가기 전에 엘리베이터를 이용하세요. <strong>B5(승강장) → B1(대합실)</strong></span>
+                <span class="en">If you have a lot of luggage, use the elevator before heading to Exit 8. <strong>B5 (platform) → B1 (concourse)</strong></span>
+                <figure><img loading="lazy" src="img/walk-01-elevator-b5.jpg" alt="Elevator from platform to concourse"></figure>
+              </li>
+              <li>
+                <span class="ko">이어서 <strong>B1(대합실) → 1F(출구)</strong> 엘리베이터를 타세요.</span>
+                <span class="en">Then take the elevator <strong>B1 (concourse) → 1F (exit)</strong>.</span>
+                <figure><img loading="lazy" src="img/walk-02-elevator-b1.jpg" alt="Elevator from concourse to street level"></figure>
+              </li>
+              <li>
+                <span class="ko">8번 출구로 나오면 이런 거리가 보입니다. 여기서부터 <strong>직진</strong>하세요.</span>
+                <span class="en">Once you come out of Exit 8 you will see this street. From here, <strong>go straight</strong>.</span>
+                <figure><img loading="lazy" src="img/walk-03-exit8.jpg" alt="View of the street from Exit 8"></figure>
+              </li>
+              <li>
+                <span class="ko">사거리에서 <strong>좌회전</strong>합니다.</span>
+                <span class="en">Turn <strong>left</strong> at the four-way intersection.</span>
+                <figure><img loading="lazy" src="img/walk-04-intersection.jpg" alt="Four-way intersection, turn left"></figure>
+              </li>
+              <li>
+                <span class="ko"><strong>오장동 흥남집</strong> 건물이 보이는 교차로에서 오른쪽 횡단보도를 건너, 흥남집 옆 골목으로 들어옵니다.</span>
+                <span class="en">At the intersection where you can see the <strong>Ojang-dong Heungnamjip</strong> building, cross the crosswalk on the right and enter the alley next to it.</span>
+                <figure><img loading="lazy" src="img/walk-05-heungnamjip.jpg" alt="Crosswalk next to Ojang-dong Heungnamjip"></figure>
+              </li>
+              <li>
+                <span class="ko">사진 속 <strong>흰색 건물</strong>이 아랑재입니다.</span>
+                <span class="en">Arangjae is the <strong>white building</strong> shown in the photo.</span>
+                <figure><img loading="lazy" src="img/walk-06-building.jpg" alt="The white building where Arangjae is located"></figure>
+              </li>
+              <li>
+                <span class="ko"><strong>Arangjae</strong> 간판이 있는 건물 입구로 들어오세요.</span>
+                <span class="en">Enter through the building entrance with the <strong>Arangjae</strong> sign.</span>
+                <figure><img loading="lazy" src="img/walk-07-entrance.jpg" alt="Building entrance"></figure>
+              </li>
+            </ol>
+          </div>
+        </details>
+
+        <h3><span class="ko">건물 안으로 들어오기</span><span class="en">Getting Inside</span></h3>
+        <ol class="steps">
+          <li>
+            <span class="ko">아랑재는 사진 속 <strong>흰색 건물</strong>입니다.</span>
+            <span class="en">Arangjae is the <strong>white building</strong> shown in the photo.</span>
+            <figure><img loading="lazy" src="img/bldg-exterior.jpg" alt="Arangjae building exterior"></figure>
+          </li>
+          <li>
+            <span class="ko">건물 입구로 들어오세요.</span>
+            <span class="en">Enter through the building entrance.</span>
+            <figure><img loading="lazy" src="img/bldg-entrance.jpg" alt="Building entrance"></figure>
+          </li>
+          <li>
+            <span class="ko">엘리베이터를 타고 예약하신 층으로 올라오세요. <strong>2층 ARA(아라) · 3층 MARU(마루)</strong></span>
+            <span class="en">Take the elevator to your floor. <strong>2F ARA · 3F MARU</strong></span>
+            <figure><img loading="lazy" src="img/bldg-elevator.jpg" alt="Elevator buttons showing 2F ARA and 3F MARU"></figure>
+          </li>
+          <li>
+            <span class="ko">현관문 앞에서 도어락에 비밀번호를 입력하세요.</span>
+            <span class="en">Enter the door code on the keypad at your unit door.</span>
+            <div class="gallery">
+              <figure><img loading="lazy" src="img/door-2f-ara.jpg" alt="2F ARA entrance door"><figcaption>2F · ARA</figcaption></figure>
+              <figure><img loading="lazy" src="img/door-3f-maru.jpg" alt="3F MARU entrance door"><figcaption>3F · MARU</figcaption></figure>
+            </div>
+            <figure><img loading="lazy" src="img/door-lock.jpg" alt="Door keypad"></figure>
+          </li>
+        </ol>
+        <div class="warn">
+          <span class="ko"><strong>현관 비밀번호는 게스트마다 다르며 수시로 변경됩니다.</strong><br>Airbnb 또는 Booking.com 메시지에서 확인해 주세요.</span>
+          <span class="en"><strong>The entrance password is unique to each guest and changes frequently.</strong><br>Please check your Airbnb or Booking.com message.</span>
+        </div>
+        <div class="note">
+          <span class="ko">체크인 후에는 Airbnb 메시지로 도착 알림을 남겨 주시면 감사하겠습니다. ♥</span>
+          <span class="en">After check-in, we would appreciate a quick message on Airbnb to let us know you arrived. ♥</span>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- ============ PARKING ============ -->
+    <details class="sec" id="parking">
+      <summary><span class="ico">🅿️</span><span class="ko">주차 안내</span><span class="en">Parking</span></summary>
+      <div class="sec-body">
+
+        <div class="note">
+          <span class="ko">아랑재에는 자체 주차장이 없습니다. 아래 <strong>인근 외부 주차장</strong>을 이용해 주세요.</span>
+          <span class="en">Arangjae does not have its own parking lot. Please use one of the <strong>nearby public parking garages</strong> below.</span>
+        </div>
+
+        <h3><span class="ko">① 아마노 센트마 상가주차장 (추천)</span><span class="en">① Amano Centma Parking (recommended)</span></h3>
+        <div class="kv">
+          <div><dt class="ko">위치</dt><dt class="en">Address</dt><dd>서울 중구 오장동 127-1</dd></div>
+          <div><dt class="ko">거리</dt><dt class="en">Distance</dt><dd><span class="ko">아랑재에서 도보 약 4분</span><span class="en">About a 4-minute walk from Arangjae</span></dd></div>
+          <div><dt class="ko">형태</dt><dt class="en">Type</dt><dd><span class="ko">지하 주차장 · 입구와 출구 게이트가 다릅니다</span><span class="en">Underground · the entrance and exit gates are separate</span></dd></div>
+          <div><dt class="ko">3시간권</dt><dt class="en">3 hours</dt><dd><span class="ko">평일 7,000원</span><span class="en">KRW 7,000 (weekdays)</span></dd></div>
+          <div><dt class="ko">6시간권</dt><dt class="en">6 hours</dt><dd><span class="ko">평일 11,000원</span><span class="en">KRW 11,000 (weekdays)</span></dd></div>
+          <div><dt class="ko">오후권</dt><dt class="en">12 hours</dt><dd><span class="ko">평일 11,000원 (12시간)</span><span class="en">KRW 11,000 (weekdays)</span></dd></div>
+        </div>
+
+        <div class="warn">
+          <span class="ko"><strong>⚠️ 반드시 주차하기 전에 주차권을 먼저 구매하세요.</strong><br>
+            ① <strong>모두의 주차장</strong> 앱에서 주차권 구매 → ② 주차장 진입 및 주차<br>
+            주차한 뒤에는 주차권을 구매할 수 없습니다.</span>
+          <span class="en"><strong>⚠️ You must buy the parking pass BEFORE you park.</strong><br>
+            ① Buy a pass in the <strong>Modu Parking (모두의 주차장)</strong> app → ② Enter the garage and park<br>
+            Passes cannot be purchased after you have already parked.</span>
+        </div>
+
+        <div class="btnrow">
+          <a class="btn primary" target="_blank" rel="noopener" href="https://map.naver.com/p/search/%EC%95%84%EB%A7%88%EB%85%B8%20%EC%84%BC%ED%8A%B8%EB%A7%88%20%EC%83%81%EA%B0%80%EC%A3%BC%EC%B0%A8%EC%9E%A5">🗺️ <span class="ko">네이버 지도</span><span class="en">Naver Map</span></a>
+          <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%EC%84%9C%EC%9A%B8%20%EC%A4%91%EA%B5%AC%20%EC%98%A4%EC%9E%A5%EB%8F%99%20127-1">Google Maps</a>
+        </div>
+        <div class="btnrow">
+          <a class="btn" target="_blank" rel="noopener" href="https://apps.apple.com/kr/search?term=%EB%AA%A8%EB%91%90%EC%9D%98%20%EC%A3%BC%EC%B0%A8%EC%9E%A5">🍎 App Store</a>
+          <a class="btn" target="_blank" rel="noopener" href="https://play.google.com/store/search?q=%EB%AA%A8%EB%91%90%EC%9D%98%20%EC%A3%BC%EC%B0%A8%EC%9E%A5&c=apps">▶️ Google Play</a>
+        </div>
+
+        <h3><span class="ko">② 묵정공원 공영주차장 (대안)</span><span class="en">② Mukjeong Park Public Parking (alternative)</span></h3>
+        <div class="kv">
+          <div><dt class="ko">위치</dt><dt class="en">Address</dt><dd>서울 중구 퇴계로45길 32-45</dd></div>
+          <div><dt class="ko">규모</dt><dt class="en">Capacity</dt><dd><span class="ko">공영 주차장 · 총 491면</span><span class="en">Public parking · 491 spaces</span></dd></div>
+          <div><dt class="ko">요금</dt><dt class="en">Rate</dt><dd><span class="ko">5분당 450원 (시간당 5,400원)</span><span class="en">KRW 450 per 5 min (KRW 5,400 / hour)</span></dd></div>
+          <div><dt class="ko">월주차</dt><dt class="en">Monthly</dt><dd><span class="ko">주간 기준 250,000원</span><span class="en">KRW 250,000 (daytime)</span></dd></div>
+          <div><dt class="ko">결제</dt><dt class="en">Payment</dt><dd><span class="ko">현장 결제 (앱 주차권 구매 미지원)</span><span class="en">Pay on site (no app passes available)</span></dd></div>
+        </div>
+        <div class="btnrow">
+          <a class="btn" target="_blank" rel="noopener" href="https://map.naver.com/p/search/%EB%AC%B5%EC%A0%95%EA%B3%B5%EC%9B%90%20%EA%B3%B5%EC%98%81%EC%A3%BC%EC%B0%A8%EC%9E%A5">🗺️ <span class="ko">네이버 지도</span><span class="en">Naver Map</span></a>
+          <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%EC%84%9C%EC%9A%B8%20%EC%A4%91%EA%B5%AC%20%ED%87%B4%EA%B3%84%EB%A1%9C45%EA%B8%B8%2032-45">Google Maps</a>
+        </div>
+
+        <div class="note">
+          <span class="ko">주차 요금은 변경될 수 있습니다. 이용 전 앱이나 현장 안내판에서 최종 요금을 확인해 주세요.</span>
+          <span class="en">Parking rates may change. Please confirm the current rate in the app or on site before parking.</span>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- ============ WIFI ============ -->
+    <details class="sec" id="wifi">
+      <summary><span class="ico">📶</span>Wi-Fi</summary>
+      <div class="sec-body">
+        <div class="copyrow">
+          <div class="val"><small>NETWORK (SSID)</small>ARANGJAE</div>
+          <button type="button" class="copybtn" data-copy="ARANGJAE"><span class="ko">복사</span><span class="en">Copy</span></button>
+        </div>
+        <div class="copyrow">
+          <div class="val"><small class="ko">비밀번호</small><small class="en">PASSWORD</small>arangjae1004*</div>
+          <button type="button" class="copybtn" data-copy="arangjae1004*"><span class="ko">복사</span><span class="en">Copy</span></button>
+        </div>
+        <figure>
+          <img loading="lazy" src="img/wifi-qr.jpg" alt="Wi-Fi QR code">
+          <figcaption>
+            <span class="ko">카메라로 QR 코드를 스캔하면 자동으로 연결됩니다.</span>
+            <span class="en">Scan the QR code with your camera to connect automatically.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </details>
+
+    <!-- ============ APPLIANCES ============ -->
+    <details class="sec" id="appliances">
+      <summary><span class="ico">🎛️</span><span class="ko">가전 사용법</span><span class="en">Appliances</span></summary>
+      <div class="sec-body">
+
+        <details class="sub">
+          <summary>❄️ <span class="ko">에어컨 · 난방</span><span class="en">Air Conditioner &amp; Heater</span></summary>
+          <div class="sub-body">
+            <ol>
+              <li><strong><span class="ko">전원</span><span class="en">Power</span></strong> — <span class="ko">에어컨 전원을 켜고 끕니다.</span><span class="en">Turns the air conditioner on or off.</span></li>
+              <li><strong><span class="ko">운전선택</span><span class="en">Mode Selection</span></strong> — <span class="ko">냉방, 제습 등 운전 모드를 선택합니다.</span><span class="en">Selects modes such as Cooling or Dehumidification.</span></li>
+              <li><strong><span class="ko">상하바람</span><span class="en">Vertical Airflow</span></strong> — <span class="ko">누르면 상하 바람이 시작됩니다. 원하는 위치에 고정하려면 한 번 더 누르세요.</span><span class="en">Press to start the vertical swing; press again to fix the airflow in place.</span></li>
+              <li><strong><span class="ko">AI 바람</span><span class="en">AI Airflow</span></strong> — <span class="ko">주변 환경을 분석해 가장 효율적으로 작동합니다.</span><span class="en">Analyses the room and runs in the most efficient mode automatically.</span></li>
+              <li><strong><span class="ko">좌우바람</span><span class="en">Horizontal Airflow</span></strong> — <span class="ko">누르면 좌우 바람이 시작됩니다. 고정하려면 한 번 더 누르세요.</span><span class="en">Press to start the horizontal swing; press again to fix it in place.</span></li>
+              <li><strong><span class="ko">온도</span><span class="en">Temperature</span></strong> — <span class="ko">희망 온도를 조절합니다.</span><span class="en">Adjusts the target temperature.</span></li>
+              <li><strong><span class="ko">바람세기</span><span class="en">Fan Speed</span></strong> — <span class="ko">자동풍 · 미약풍 · 약풍 · 중풍 · 강풍으로 조절합니다.</span><span class="en">Auto, Faint, Low, Medium or High.</span></li>
+              <li><strong><span class="ko">절전</span><span class="en">Energy Saving</span></strong> — <span class="ko">쾌적절전 기능을 설정합니다.</span><span class="en">Sets the Comfortable Saving mode to reduce power use.</span></li>
+              <li><strong><span class="ko">파워 / 소프트</span><span class="en">Power / Soft</span></strong> — <span class="ko">파워바람, 아이스쿨파워, 소프트바람을 설정합니다.</span><span class="en">Power Air, Ice Cool Power and Soft Air.</span></li>
+              <li><strong><span class="ko">바람선택</span><span class="en">Airflow Selection</span></strong> — <span class="ko">에어가이드 → 고천장 → 자동온도 → 스터디 → 매너 → 롱파워 → 숲속 → 해제 순으로 전환됩니다.</span><span class="en">Cycles through Air Guide → High Ceiling → Auto Temp → Study → Manner → Long Power → Forest → Off.</span></li>
+              <li><strong><span class="ko">취침</span><span class="en">Sleep</span></strong> — <span class="ko">취침예약(자동 종료) 기능을 설정합니다.</span><span class="en">Sets the sleep timer for automatic shut-off.</span></li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>🌀 <span class="ko">실링팬 (2층 ARA 전용)</span><span class="en">Ceiling Fan (2F ARA only)</span></summary>
+          <div class="sub-body">
+            <ol>
+              <li><strong><span class="ko">전원</span><span class="en">Power</span></strong> — <span class="ko">실링팬을 켜고 끕니다.</span><span class="en">Turns the ceiling fan on and off.</span></li>
+              <li><strong><span class="ko">조명 On / Off</span><span class="en">Lighting On / Off</span></strong> — <span class="ko">조명을 켜고 끕니다.</span><span class="en">Turns the light on and off.</span></li>
+              <li><strong><span class="ko">정회전 / 역회전</span><span class="en">Forward / Reverse Rotation</span></strong> —
+                <span class="ko">바람 방향을 바꿉니다. <em>정회전</em>은 아래로 부는 하향풍(여름 냉방용), <em>역회전</em>은 위로 부는 상향풍(겨울 공기 순환용)입니다.</span>
+                <span class="en">Changes the airflow direction. <em>Forward</em> blows downward (summer cooling); <em>reverse</em> blows upward (winter air circulation).</span></li>
+              <li><strong><span class="ko">속도</span><span class="en">Speed</span></strong> — <span class="ko">1~6단계까지 조절할 수 있습니다.</span><span class="en">Adjustable from level 1 to 6.</span></li>
+              <li><strong><span class="ko">날개 회전 끄기</span><span class="en">Turn Off Blade Rotation</span></strong> — <span class="ko">날개 회전을 멈춥니다.</span><span class="en">Stops the blades.</span></li>
+              <li><strong><span class="ko">자연풍</span><span class="en">Natural Wind</span></strong> — <span class="ko">속도가 변하면서 자연스러운 바람을 만듭니다.</span><span class="en">Varies the speed to create a natural breeze.</span></li>
+              <li><strong><span class="ko">타이머</span><span class="en">Timer</span></strong> — <span class="ko">1, 2, 4시간 타이머를 설정할 수 있습니다.</span><span class="en">Set a timer for 1, 2 or 4 hours.</span></li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>📺 <span class="ko">TV · 유튜브 · 넷플릭스</span><span class="en">TV · YouTube · Netflix</span></summary>
+          <div class="sub-body">
+            <ol>
+              <li><strong><span class="ko">전원</span><span class="en">Power</span></strong> — <span class="ko">TV를 켜거나 대기모드로 전환합니다.</span><span class="en">Turns the TV on or switches it to standby.</span></li>
+              <li><strong><span class="ko">홈 화면</span><span class="en">Home Screen</span></strong> — <span class="ko">스마트 TV 홈 화면에서 여러 앱을 탐색합니다.</span><span class="en">Browse apps on the smart TV home screen.</span></li>
+              <li><strong><span class="ko">뒤로가기 / 종료</span><span class="en">Back / Exit</span></strong> — <span class="ko">이전 메뉴로 돌아가거나 앱을 종료합니다.</span><span class="en">Go back to the previous menu or exit the app.</span></li>
+              <li><strong><span class="ko">볼륨 조절</span><span class="en">Volume</span></strong> — <span class="ko">볼륨(+/−) 버튼으로 음량을 조절합니다.</span><span class="en">Use the (+/−) buttons to adjust the volume.</span></li>
+              <li><strong><span class="ko">유튜브 바로 실행</span><span class="en">YouTube Direct Access</span></strong> — <span class="ko">전용 YouTube 버튼을 누르면 즉시 실행됩니다.</span><span class="en">Press the dedicated YouTube button to launch it instantly.</span></li>
+              <li><strong><span class="ko">넷플릭스 바로 실행</span><span class="en">Netflix Direct Access</span></strong> — <span class="ko">전용 NETFLIX 버튼을 누르면 즉시 실행됩니다.</span><span class="en">Press the dedicated NETFLIX button to launch it instantly.</span></li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>🧺 <span class="ko">세탁기</span><span class="en">Washing Machine</span></summary>
+          <div class="sub-body">
+            <h4><span class="ko">주요 버튼</span><span class="en">Main buttons</span></h4>
+            <ul>
+              <li><strong>01</strong> <span class="ko">전원 — 세탁기를 켜고 끕니다.</span><span class="en">Power — turns the machine on or off.</span></li>
+              <li><strong>02</strong> <span class="ko">세탁기 — 세탁기 기능을 선택합니다.</span><span class="en">Washer — selects the washing machine functions.</span></li>
+              <li><strong>03</strong> <span class="ko">탐색 다이얼 — 좌우로 돌려 코스(표준, 쾌속 등)를 선택합니다.</span><span class="en">Navigation dial — turn to select a cycle (Normal, Quick, etc.).</span></li>
+              <li><strong>04</strong> <span class="ko">동작/일시정지 — 코스 선택 후 <em>길게 눌러</em> 세탁을 시작합니다.</span><span class="en">Start/Pause — <em>long-press</em> to start after selecting a cycle.</span></li>
+            </ul>
+            <h4><span class="ko">세제 및 유연제</span><span class="en">Detergent &amp; softener</span></h4>
+            <p>
+              <span class="ko">세탁기 왼쪽 상단의 세제함을 당겨서 넣어 주세요. <strong>세제는 왼쪽, 섬유유연제는 오른쪽</strong>입니다. 둘 다 최대선(MAX)을 넘기지 마세요.</span>
+              <span class="en">Pull out the drawer at the top left. <strong>Detergent goes on the left, fabric softener on the right.</strong> Never exceed the MAX line.</span>
+            </p>
+            <h4><span class="ko">세탁 순서</span><span class="en">Quick steps</span></h4>
+            <p><span class="ko">전원 켜기 → 코스 선택 → 세제 투입 → 시작 버튼 길게 누르기</span><span class="en">Power on → select cycle → add detergent → long-press Start</span></p>
+            <div class="warn">
+              <span class="ko"><strong>주의</strong><br>
+                · 세탁 전 주머니 속 동전, 열쇠 등 이물질을 반드시 제거하세요.<br>
+                · 전기담요, 카펫, 방수 소재(스키복 등) 의류는 절대 세탁 금지입니다.<br>
+                · 세탁물이 문 고무패킹에 끼이지 않도록 안쪽으로 깊숙이 넣으세요.<br>
+                · 세탁 후에는 문을 살짝 열어 내부를 자연 건조해 주세요.</span>
+              <span class="en"><strong>Safety</strong><br>
+                · Check pockets for coins, keys and hairpins before washing.<br>
+                · Never wash waterproof items (skiwear, rain covers) or electric blankets.<br>
+                · Push laundry fully inside so it is not caught in the door seal.<br>
+                · Leave the door ajar after washing to air-dry the drum and prevent odours.</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>🌬️ <span class="ko">건조기</span><span class="en">Dryer</span></summary>
+          <div class="sub-body">
+            <h4><span class="ko">주요 버튼</span><span class="en">Main buttons</span></h4>
+            <ul>
+              <li><strong>01</strong> <span class="ko">전원 — 건조기를 켜고 끕니다.</span><span class="en">Power — turns the dryer on or off.</span></li>
+              <li><strong>02</strong> <span class="ko">건조기 — 건조기 기능을 선택합니다.</span><span class="en">Dryer — selects the dryer functions.</span></li>
+              <li><strong>03</strong> <span class="ko">탐색 다이얼 — 좌우로 돌려 코스(표준건조, AI맞춤 등)를 선택합니다.</span><span class="en">Navigation dial — turn to select a cycle (Normal, AI Optimal, etc.).</span></li>
+              <li><strong>04</strong> <span class="ko">동작/일시정지 — 코스 선택 후 <em>길게 눌러</em> 건조를 시작합니다.</span><span class="en">Start/Pause — <em>long-press</em> to start after selecting a cycle.</span></li>
+            </ul>
+            <h4><span class="ko">간단 사용법</span><span class="en">Quick steps</span></h4>
+            <p><span class="ko">전원 켜기 → 건조기 버튼 선택 → 다이얼로 코스 선택 → 동작 버튼 길게 누르기</span><span class="en">Power on → press the Dryer button → select a cycle with the dial → long-press Start</span></p>
+            <h4><span class="ko">필터 청소 및 관리</span><span class="en">Filter care</span></h4>
+            <ul>
+              <li><span class="ko">사용 후에는 반드시 필터의 먼지를 제거해 주세요.</span><span class="en">Clean the lint filter after every use.</span></li>
+              <li><span class="ko">사용 후 문을 살짝 열어 두면 습기와 냄새를 예방할 수 있습니다.</span><span class="en">Leave the door slightly open afterwards to remove moisture and prevent odours.</span></li>
+              <li><span class="ko">주머니 속 동전·열쇠 등 이물질은 고장의 원인이 됩니다.</span><span class="en">Foreign objects such as coins or keys can damage the machine.</span></li>
+            </ul>
+            <div class="warn">
+              <span class="ko"><strong>건조 금지 품목 (화재 및 파손 주의)</strong><br>
+                · 방수 소재 의류 (스키복, 비옷, 방수 커버 등)<br>
+                · 전기담요 및 카펫<br>
+                · 기름이나 가연성 물질이 묻은 의류<br>
+                · 열에 약한 소재 (플라스틱, 우레탄, 라텍스 포함 품목)</span>
+              <span class="en"><strong>Never tumble-dry (fire &amp; damage risk)</strong><br>
+                · Waterproof items (skiwear, raincoats, waterproof covers)<br>
+                · Electric blankets and carpets<br>
+                · Items soiled with oil or flammable substances<br>
+                · Heat-sensitive materials (plastic, urethane, latex)</span>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ WASTE ============ -->
+    <details class="sec" id="waste">
+      <summary><span class="ico">🗑️</span><span class="ko">쓰레기 배출</span><span class="en">Waste Disposal</span></summary>
+      <div class="sec-body">
+        <p>
+          <span class="ko">쓰레기는 아래와 같이 분리해 주세요.</span>
+          <span class="en">Please separate your trash into:</span>
+        </p>
+        <ul>
+          <li><span class="ko"><strong>일반 쓰레기</strong></span><span class="en"><strong>General waste</strong></span></li>
+          <li><span class="ko"><strong>재활용</strong> — 플라스틱, 캔, 종이, 비닐 등</span><span class="en"><strong>Recycling</strong> — plastic, cans, paper, vinyl, etc.</span></li>
+        </ul>
+        <figure>
+          <img loading="lazy" src="img/waste-bags.jpg" alt="General trash and recycling in separate transparent bags">
+          <figcaption>
+            <span class="ko">종류별로 투명 비닐봉투를 따로 사용해 주세요.</span>
+            <span class="en">Please use a separate transparent plastic bag for each type.</span>
+          </figcaption>
+        </figure>
+        <figure>
+          <img loading="lazy" src="img/waste-foodbin.jpg" alt="Food waste bin">
+          <figcaption>
+            <span class="ko">음식물 쓰레기는 &lsquo;Food Waste&rsquo; 라벨이 붙은 통에 넣어 주세요.</span>
+            <span class="en">Food waste goes in the container labelled &lsquo;Food Waste&rsquo;.</span>
+          </figcaption>
+        </figure>
+        <div class="note">
+          <span class="ko"><strong>분리한 봉투는 숙소 안에 그대로 두시면 됩니다.</strong><br>체크아웃 후 청소 스태프가 수거합니다. 머무시는 동안 쓰레기를 배출하고 싶으시면 Airbnb 또는 Booking.com 메신저로 연락해 주세요.</span>
+          <span class="en"><strong>Just leave the bags inside the accommodation.</strong><br>Our cleaning staff will collect them after check-out. If you would like to dispose of trash during your stay, please contact us through the Airbnb or Booking.com messenger.</span>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============ RULES ============ -->
+    <details class="sec" id="rules">
+      <summary><span class="ico">📋</span><span class="ko">이용 규칙</span><span class="en">House Rules</span></summary>
+      <div class="sec-body">
+        <ul>
+          <li><span class="ko">인근 주민에게 피해가 갈 수 있으니 <strong>특히 야간에는 소음을 자제</strong>해 주세요.</span><span class="en">Please keep noise to a minimum, <strong>especially at night</strong>, as nearby residents may be affected.</span></li>
+          <li><span class="ko">다음 게스트를 위해 <strong>냄새가 강한 음식의 조리는 삼가</strong> 주세요.</span><span class="en">Please refrain from cooking strong-smelling foods to ensure a pleasant stay for the next guest.</span></li>
+          <li><span class="ko"><strong>실내 흡연은 엄격히 금지</strong>됩니다.</span><span class="en"><strong>Smoking is strictly prohibited indoors.</strong></span></li>
+          <li><span class="ko">쓰레기는 안내에 따라 분리 배출해 주세요.</span><span class="en">Please dispose of trash according to the provided instructions.</span></li>
+          <li><span class="ko">다음 게스트를 위해 준비된 비품은 사용하실 수 없습니다. 무단 사용 시 추가 요금이 부과될 수 있습니다.</span><span class="en">Items prepared for the next guest are not for use during your stay. Unauthorised use may result in additional charges.</span></li>
+          <li><span class="ko">벽지, 가구, 침구, 러그가 파손되거나 영구적으로 오염된 경우, 또는 음식물이나 이물질로 변기가 막힌 경우 추가 요금이 부과될 수 있습니다.</span><span class="en">If wallpaper, furniture, bedding or rugs are damaged or permanently stained, or if the toilet becomes clogged due to food or foreign objects, additional charges may apply.</span></li>
+        </ul>
+        <div class="note">
+          <span class="ko">모두가 기분 좋게 머물 수 있도록 공간을 깨끗하게 사용해 주셔서 감사합니다.</span>
+          <span class="en">Thank you for helping us keep the space clean for everyone.</span>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============ NEARBY ============ -->
+    <details class="sec" id="nearby">
+      <summary><span class="ico">🍽️</span><span class="ko">주변 정보</span><span class="en">Nearby</span></summary>
+      <div class="sec-body">
+
+        <details class="sub">
+          <summary>🍚 <span class="ko">식당</span><span class="en">Restaurants</span></summary>
+          <div class="sub-body">
+            <ul class="places">
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/cfDayo8G2X1iBWFu9"><span class="info"><span class="nm">Ojang Galbi <span class="ko">(오장갈비)</span></span><span class="meta"><span class="ko">한식 · 소·돼지갈비 구이</span><span class="en">Korean BBQ · beef &amp; pork ribs</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/L9dUG3ekfUAAGzdZ8"><span class="info"><span class="nm">김삼보 을지로점 <span class="en">(Kimsambo)</span></span><span class="meta"><span class="ko">한식 · 김치찌개 · 평일 08:00–18:00 / 주말 09:00–</span><span class="en">Korean · kimchi stew &amp; pork · Mon–Fri 08:00–18:00, Sat–Sun from 09:00</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/QSBK9iXTXzt6ZBGc9"><span class="info"><span class="nm">Hanamdong Euljiro</span><span class="meta"><span class="ko">한식 · 솥밥</span><span class="en">Korean · hot pot rice</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/GKyw2jPKYyxyyCQt5"><span class="info"><span class="nm">Nag-Wonjeong <span class="ko">(낙원정)</span></span><span class="meta"><span class="ko">한식 · 한우</span><span class="en">Korean beef restaurant</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/AwYvwxYaQG8RTgU5A"><span class="info"><span class="nm">Buchon Yukhoe <span class="ko">(부촌육회 본점)</span></span><span class="meta"><span class="ko">한식 · 육회</span><span class="en">Korean · yukhoe (beef tartare)</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/ubmsGU5HCsQN3JsG7"><span class="info"><span class="nm">게미식당 <span class="en">(Gemi Sikdang)</span></span><span class="meta"><span class="ko">게 요리 전문점</span><span class="en">Crab house</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/zc4cxNyVNeV1GyTw7"><span class="info"><span class="nm">육즙관리소 동대문점</span><span class="meta"><span class="ko">한식 · 고기구이</span><span class="en">Korean BBQ</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/YmgfszzM6JvX4KM86"><span class="info"><span class="nm">잘빠진 메밀 을지로 직영점</span><span class="meta"><span class="ko">메밀국수 · 메밀전 · 만두</span><span class="en">Buckwheat noodles, pancakes &amp; dumplings</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/oLxb7HdX53dSCcq39"><span class="info"><span class="nm">GEUNDONOK Euljiro</span><span class="meta"><span class="ko">돼지고기 구이</span><span class="en">Pork BBQ</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/umDJEGeoFXYrifgT8"><span class="info"><span class="nm">낙원의 소바 <span class="en">(Nagwon Soba)</span></span><span class="meta"><span class="ko">소바 · 돈까스</span><span class="en">Soba noodles &amp; pork cutlet</span></span></span><span class="go">›</span></a></li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>☕ <span class="ko">카페 · 베이커리</span><span class="en">Cafés &amp; Bakeries</span></summary>
+          <div class="sub-body">
+            <ul class="places">
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/8en26m3rzr9dpLuf8"><span class="info"><span class="nm">Asor Coffee ⭐</span><span class="meta"><span class="ko">아랑재 건물 1층 · 평일 10:00–17:00 / 토 11:00–18:00</span><span class="en">On the 1st floor of our building · Mon–Fri 10:00–17:00, Sat 11:00–18:00</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Paint%20Coffee%20%26%20Bar%20Euljiro"><span class="info"><span class="nm">Paint Coffee &amp; Bar Euljiro</span><span class="meta"><span class="ko">카페 &amp; 브런치</span><span class="en">Café &amp; brunch</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/CDLeSrdGGDytTRkTA"><span class="info"><span class="nm">수잔나의 앞치마 <span class="en">(Susanna&rsquo;s Apron)</span></span><span class="meta"><span class="ko">카페 &amp; 베이커리</span><span class="en">Café &amp; bakery</span></span></span><span class="go">›</span></a></li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>🏪 <span class="ko">편의점 · 생활용품</span><span class="en">Convenience &amp; Essentials</span></summary>
+          <div class="sub-body">
+            <ul class="places">
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/ndHgGtQFETwdkPJK9"><span class="info"><span class="nm">7-ELEVEN</span><span class="meta"><span class="ko">편의점 · 24시간 · 도보 1분</span><span class="en">Convenience store · open 24/7 · 1-minute walk</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/KyrNbLLYnbvjSfnU9"><span class="info"><span class="nm">Olive Young <span class="ko">광장시장점</span><span class="en">Gwangjang Market</span> 🌟</span><span class="meta"><span class="ko">화장품 · 10:00–22:00 · 도보 16분</span><span class="en">Cosmetics · 10:00–22:00 · 16-minute walk</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/ansZYjupidZ7DPz98"><span class="info"><span class="nm">Daiso <span class="ko">던던 동대문점</span><span class="en">DunDun Dongdaemun</span></span><span class="meta"><span class="ko">생활용품 · 10:30–21:00 · 도보 12분</span><span class="en">Household goods · 10:30–21:00 · 12-minute walk</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/nC6fFmGbxu6Jv4Ni8"><span class="info"><span class="nm">Olive Young <span class="ko">던던 동대문점</span><span class="en">DunDun Dongdaemun</span></span><span class="meta"><span class="ko">화장품 · 10:30–21:00 · 도보 12분</span><span class="en">Cosmetics · 10:30–21:00 · 12-minute walk</span></span></span><span class="go">›</span></a></li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>🏛️ <span class="ko">가볼 만한 곳</span><span class="en">Places to Visit</span></summary>
+          <div class="sub-body">
+            <ul class="places">
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/qTrgek34Xhs8P1kGA"><span class="info"><span class="nm">DDP <span class="ko">동대문디자인플라자</span><span class="en">Dongdaemun Design Plaza</span></span><span class="meta"><span class="ko">복합문화공간</span><span class="en">Cultural centre</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/gDbsDt653kwfZSFt6"><span class="info"><span class="nm"><span class="ko">광장시장</span><span class="en">Gwangjang Market</span></span><span class="meta"><span class="ko">전통시장 · 길거리 음식</span><span class="en">Traditional market &amp; street food</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/XhzaVQKRYD1nPQ1E7"><span class="info"><span class="nm"><span class="ko">청계천</span><span class="en">Cheonggyecheon</span></span><span class="meta"><span class="ko">산책과 러닝하기 좋은 하천</span><span class="en">Stream — great for walking &amp; running</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/4DzZb5RfZ9GLZ7QXA"><span class="info"><span class="nm"><span class="ko">창덕궁 &amp; 종묘</span><span class="en">Changdeokgung Palace &amp; Jongmyo Shrine</span></span><span class="meta"><span class="ko">문화유산</span><span class="en">Cultural landmark</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/BQuaouqqbS75vnVm7"><span class="info"><span class="nm"><span class="ko">남산골한옥마을</span><span class="en">Namsangol Hanok Village</span></span><span class="meta"><span class="ko">관광명소</span><span class="en">Tourist attraction</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/vhvwDMNy2FVZhKc98"><span class="info"><span class="nm"><span class="ko">남산공원</span><span class="en">Namsan Mountain Park</span></span><span class="meta"><span class="ko">산책 · 전망</span><span class="en">Mountain park</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/XvftgUXKu7coGMyD8"><span class="info"><span class="nm"><span class="ko">명동 쇼핑거리</span><span class="en">Myeong-dong Shopping Street</span></span><span class="meta"><span class="ko">쇼핑</span><span class="en">Shopping district</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/s7wGabDsX63tEfxp8"><span class="info"><span class="nm">DunDun Dongdaemun <span class="ko">(던던 동대문)</span></span><span class="meta"><span class="ko">쇼핑몰</span><span class="en">Shopping mall</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/QezeMGbag8QdWzca6"><span class="info"><span class="nm"><span class="ko">현대백화점 면세점 동대문점</span><span class="en">Hyundai Duty Free Dongdaemun</span></span><span class="meta"><span class="ko">면세점</span><span class="en">Duty free shopping mall</span></span></span><span class="go">›</span></a></li>
+              <li><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/fqwb2PYbusCF1msm6"><span class="info"><span class="nm"><span class="ko">답십리 고미술상가</span><span class="en">Dapsimni Antique Shopping Mall</span></span><span class="meta"><span class="ko">골동품 상가</span><span class="en">Antique shopping</span></span></span><span class="go">›</span></a></li>
+            </ul>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ EMERGENCY ============ -->
+    <details class="sec" id="emergency">
+      <summary><span class="ico">🚨</span><span class="ko">비상 안내</span><span class="en">Emergency</span></summary>
+      <div class="sec-body">
+        <p>
+          <span class="ko">머무시는 동안 긴급한 상황이 생기면 아래 번호로 연락하세요. 통화료는 무료입니다.</span>
+          <span class="en">For urgent situations during your stay, use the emergency numbers below. These calls are free.</span>
+        </p>
+        <div class="tel-grid">
+          <a href="tel:119"><span class="num">119</span><span class="who"><span class="ko">화재 · 구조 · 구급</span><span class="en">Fire · Rescue<br>Ambulance</span></span></a>
+          <a href="tel:112"><span class="num">112</span><span class="who"><span class="ko">경찰</span><span class="en">Police</span></span></a>
+          <a href="tel:1330"><span class="num">1330</span><span class="who"><span class="ko">관광통역안내<br>(24시간, 다국어)</span><span class="en">Tourist hotline<br>(24h, multilingual)</span></span></a>
+        </div>
+
+        <h3><span class="ko">피난 안내도</span><span class="en">Evacuation Plans</span></h3>
+        <p>
+          <span class="ko">숙소 위치에 해당하는 안내도를 확인해 주세요. 이미지를 누르면 크게 볼 수 있습니다.</span>
+          <span class="en">Check the plan for your unit. Tap an image to enlarge it.</span>
+        </p>
+
+        <details class="sub">
+          <summary>🏠 2F · ARA</summary>
+          <div class="sub-body">
+            <figure><img loading="lazy" src="img/evac-2f-exit.jpg" alt="2F evacuation plan from the exit"><figcaption>2F · Exit</figcaption></figure>
+            <figure><img loading="lazy" src="img/evac-2f-201.jpg" alt="2F room 201 evacuation plan"><figcaption>2F · 201</figcaption></figure>
+            <figure><img loading="lazy" src="img/evac-2f-202.jpg" alt="2F room 202 evacuation plan"><figcaption>2F · 202</figcaption></figure>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>🏠 3F · MARU</summary>
+          <div class="sub-body">
+            <figure><img loading="lazy" src="img/evac-3f-exit.jpg" alt="3F evacuation plan from the exit"><figcaption>3F · Exit</figcaption></figure>
+            <figure><img loading="lazy" src="img/evac-3f-301.jpg" alt="3F room 301 evacuation plan"><figcaption>3F · 301</figcaption></figure>
+            <figure><img loading="lazy" src="img/evac-3f-302.jpg" alt="3F room 302 evacuation plan"><figcaption>3F · 302</figcaption></figure>
+          </div>
+        </details>
+
+        <h4><span class="ko">화재 시 대피 방법</span><span class="en">In case of fire</span></h4>
+        <ol>
+          <li><span class="ko">&ldquo;불이야!&rdquo;라고 크게 외치십시오.</span><span class="en">Shout &ldquo;Bul-iya!&rdquo; (Fire!) as loudly as you can.</span></li>
+          <li><span class="ko">화재경보 비상벨을 누르십시오.</span><span class="en">Push the emergency bell.</span></li>
+          <li><span class="ko">몸을 낮추고 대피 안내도의 동선을 따라 신속하게 대피하십시오.</span><span class="en">Lower your body and evacuate quickly along the marked exit route.</span></li>
+        </ol>
+
+        <h4><span class="ko">소화기 사용법</span><span class="en">Using a fire extinguisher</span></h4>
+        <ol>
+          <li><span class="ko">손잡이의 안전핀을 잡아당겨 뽑습니다.</span><span class="en">Remove the safety pin.</span></li>
+          <li><span class="ko">노즐을 잡고 불 쪽을 향합니다.</span><span class="en">Aim at the base of the fire.</span></li>
+          <li><span class="ko">손잡이를 꽉 움켜쥡니다.</span><span class="en">Squeeze the handle.</span></li>
+          <li><span class="ko">분말을 좌우로 골고루 분사합니다.</span><span class="en">Sweep from side to side.</span></li>
+        </ol>
+
+        <h4><span class="ko">완강기 사용법</span><span class="en">Using a slow descender</span></h4>
+        <ol>
+          <li><span class="ko">지지대 고리에 완강기 후크를 걸고 잠급니다.</span><span class="en">Hook the descender to the support and lock it.</span></li>
+          <li><span class="ko">지지대를 창밖으로 밀고 줄을 아래로 던집니다.</span><span class="en">Push the support outside and throw the reel down.</span></li>
+          <li><span class="ko">안전벨트를 가슴 높이(겨드랑이)까지 착용하고 조입니다.</span><span class="en">Wear the safety belt up to chest height and tighten it.</span></li>
+          <li><span class="ko">벽을 짚으며 천천히 내려갑니다.</span><span class="en">Descend safely, steadying yourself against the wall.</span></li>
+        </ol>
+      </div>
+    </details>
+
+    <!-- ============ CONTACT ============ -->
+    <details class="sec" id="contact" open>
+      <summary><span class="ico">💬</span><span class="ko">문의하기</span><span class="en">Need Assistance?</span></summary>
+      <div class="sec-body">
+        <p>
+          <span class="ko">궁금한 점이 있으시면 <strong>Airbnb 또는 Booking.com 메시지</strong>로 편하게 연락 주세요.</span>
+          <span class="en">Please feel free to contact us via <strong>Airbnb or Booking.com message</strong>.</span>
+        </p>
+        <p>
+          <span class="ko">긴급한 상황에서는 아래 번호로 전화해 주세요.</span>
+          <span class="en">For urgent matters, you may call us directly.</span>
+        </p>
+        <div class="btnrow">
+          <a class="btn primary" href="tel:+821022983100">📞 +82-10-2298-3100</a>
+        </div>
+      </div>
+    </details>
+
+    <footer>
+      &copy; 2026 <span class="ko">아랑재</span> Arangjae Hostel
+    </footer>
+
+  </div>
+
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button type="button" class="close" aria-label="Close">✕</button>
+    <img alt="">
+  </div>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+
+      /* ---- language ---- */
+      function setLang(lang) {
+        root.setAttribute('data-lang', lang);
+        root.setAttribute('lang', lang);
+        document.querySelectorAll('[data-setlang]').forEach(function (b) {
+          b.setAttribute('aria-pressed', String(b.dataset.setlang === lang));
+        });
+        try { localStorage.setItem('arangjae-guide-lang', lang); } catch (e) { }
+      }
+
+      setLang(root.getAttribute('data-lang') === 'en' ? 'en' : 'ko');
+
+      document.querySelectorAll('[data-setlang]').forEach(function (b) {
+        b.addEventListener('click', function () { setLang(b.dataset.setlang); });
+      });
+
+      /* ---- copy to clipboard ---- */
+      function flash(btn) {
+        btn.classList.add('done');
+        setTimeout(function () { btn.classList.remove('done'); }, 1200);
+      }
+
+      function copyText(text, btn) {
+        var done = function () { flash(btn); };
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+        } else {
+          fallback(text, done);
+        }
+      }
+
+      function fallback(text, done) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { }
+        document.body.removeChild(ta);
+      }
+
+      document.querySelectorAll('[data-copy]').forEach(function (btn) {
+        btn.addEventListener('click', function () { copyText(btn.dataset.copy, btn); });
+      });
+
+      /* ---- lightbox ---- */
+      var lb = document.getElementById('lightbox');
+      var lbImg = lb.querySelector('img');
+
+      document.querySelectorAll('figure img').forEach(function (img) {
+        img.addEventListener('click', function () {
+          lbImg.src = img.currentSrc || img.src;
+          lbImg.alt = img.alt;
+          lb.classList.add('on');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      function closeLb() {
+        lb.classList.remove('on');
+        lbImg.removeAttribute('src');
+        document.body.style.overflow = '';
+      }
+
+      lb.addEventListener('click', closeLb);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && lb.classList.contains('on')) closeLb();
+      });
+
+      /* ---- top bar turns solid once the hero is scrolled past ---- */
+      var bar = document.querySelector('.topbar');
+      var hero = document.querySelector('.hero');
+
+      function syncBar() {
+        var limit = hero.offsetHeight - 64;
+        bar.classList.toggle('solid', window.scrollY > (limit > 0 ? limit : 0));
+      }
+      syncBar();
+      window.addEventListener('scroll', syncBar, { passive: true });
+      window.addEventListener('resize', syncBar);
+
+      /* ---- open the section an anchor points to ---- */
+      function openTarget(hash) {
+        if (!hash) return;
+        var el = document.querySelector(hash);
+        if (el && el.tagName === 'DETAILS') el.open = true;
+      }
+      document.querySelectorAll('.secnav a, .quick a[href^="#"]').forEach(function (a) {
+        a.addEventListener('click', function () { openTarget(a.getAttribute('href')); });
+      });
+      openTarget(location.hash);
+    })();
+  </script>
+
+</body>
+
+</html>
