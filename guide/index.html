@@ -331,6 +331,97 @@
     /* ---------- footer ---------- */
     footer { text-align: center; padding: 34px 16px 10px; font-size: 0.76rem; color: #b3aaa1; }
 
+
+    /* ---------- chatbot ---------- */
+    .chat-fab {
+      position: fixed; z-index: 60;
+      right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+      width: 56px; height: 56px; border-radius: 50%; border: none; cursor: pointer;
+      background: var(--ink); color: #fff; font-size: 1.45rem; line-height: 1;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.26);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+    }
+    .chat-fab:active { transform: scale(0.93); }
+    .chat-fab[hidden] { display: none !important; }
+
+    .chat-panel {
+      position: fixed; z-index: 70; inset: auto 0 0 0;
+      display: flex; flex-direction: column;
+      height: min(86svh, 720px);
+      background: var(--bg);
+      border-top-left-radius: 18px; border-top-right-radius: 18px;
+      box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.28);
+      transform: translateY(100%); transition: transform 0.26s ease;
+    }
+    @supports not (height: 86svh) { .chat-panel { height: 86vh; } }
+    .chat-panel.on { transform: translateY(0); }
+    .chat-panel[hidden] { display: none !important; }
+
+    .chat-head {
+      flex: none; display: flex; align-items: center; gap: 10px;
+      padding: 15px 16px; border-bottom: 1px solid var(--line); background: var(--card);
+      border-top-left-radius: 18px; border-top-right-radius: 18px;
+    }
+    .chat-head .t { font-family: var(--serif); font-weight: 700; color: var(--ink); font-size: 1rem; }
+    .chat-head .s { font-size: 0.72rem; color: var(--muted); }
+    .chat-close {
+      margin-left: auto; flex: none; width: 34px; height: 34px; border-radius: 50%;
+      border: 1px solid var(--line); background: var(--bg); color: var(--body);
+      font-size: 1rem; cursor: pointer; line-height: 1;
+    }
+
+    .chat-log { flex: 1; overflow-y: auto; padding: 16px; -webkit-overflow-scrolling: touch; }
+    .chat-msg { max-width: 86%; margin-bottom: 12px; font-size: 0.9rem; line-height: 1.65; white-space: pre-wrap; }
+    .chat-msg.bot {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 14px 14px 14px 4px; padding: 11px 14px; color: var(--body);
+    }
+    .chat-msg.me {
+      margin-left: auto; background: var(--ink); color: #fff;
+      border-radius: 14px 14px 4px 14px; padding: 11px 14px;
+    }
+    .chat-msg.err { background: var(--warn-bg); border: 1px solid var(--warn-line); color: var(--warn-ink); border-radius: 14px; padding: 11px 14px; }
+    .chat-msg .dots span {
+      display: inline-block; width: 6px; height: 6px; margin-right: 4px; border-radius: 50%;
+      background: var(--muted); animation: blink 1.3s infinite;
+    }
+    .chat-msg .dots span:nth-child(2) { animation-delay: 0.18s; }
+    .chat-msg .dots span:nth-child(3) { animation-delay: 0.36s; }
+    @keyframes blink { 0%, 60%, 100% { opacity: 0.25; } 30% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .chat-msg .dots span { animation: none; opacity: 0.5; } }
+
+    .chat-sugg { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
+    .chat-sugg button {
+      padding: 8px 13px; border-radius: 18px; border: 1px solid var(--line);
+      background: var(--card); color: var(--body); font-family: inherit;
+      font-size: 0.8rem; cursor: pointer; text-align: left;
+    }
+    .chat-sugg button:active { background: #f3efe9; }
+
+    .chat-form {
+      flex: none; display: flex; gap: 8px; align-items: flex-end;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+      border-top: 1px solid var(--line); background: var(--card);
+    }
+    .chat-form textarea {
+      flex: 1; resize: none; border: 1px solid var(--line); border-radius: 12px;
+      padding: 10px 12px; font-family: inherit; font-size: 0.92rem; line-height: 1.5;
+      max-height: 110px; background: var(--bg); color: var(--ink);
+    }
+    .chat-form textarea:focus { outline: 2px solid #ddd3c6; outline-offset: -1px; }
+    .chat-send {
+      flex: none; width: 42px; height: 42px; border-radius: 50%; border: none;
+      background: var(--ink); color: #fff; font-size: 1rem; cursor: pointer;
+    }
+    .chat-send:disabled { opacity: 0.35; cursor: default; }
+    .chat-note { flex: none; padding: 0 16px 10px; font-size: 0.7rem; color: var(--muted); text-align: center; background: var(--card); }
+
+    @media (min-width: 560px) {
+      .chat-panel { inset: auto 16px 16px auto; width: 420px; border-radius: 18px; height: min(76svh, 680px); }
+      .chat-head { border-radius: 18px 18px 0 0; }
+    }
+
     /* ---------- lightbox ---------- */
     #lightbox {
       position: fixed; inset: 0; z-index: 100; display: none;
@@ -1325,6 +1416,30 @@
 
   </div>
 
+  <button type="button" class="chat-fab" id="chatFab" hidden aria-label="Ask about your stay">💬</button>
+
+  <div class="chat-panel" id="chatPanel" hidden role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+    <div class="chat-head">
+      <div>
+        <div class="t" id="chatTitle"><span class="ko">무엇이든 물어보세요</span><span class="en">Ask us anything</span></div>
+        <div class="s"><span class="ko">아랑재 안내 도우미</span><span class="en">Arangjae guide assistant</span></div>
+      </div>
+      <button type="button" class="chat-close" id="chatClose" aria-label="Close">✕</button>
+    </div>
+
+    <div class="chat-log" id="chatLog"></div>
+
+    <form class="chat-form" id="chatForm">
+      <textarea id="chatInput" rows="1" maxlength="1000" autocomplete="off"
+        data-ph-ko="궁금한 점을 입력하세요" data-ph-en="Type your question"></textarea>
+      <button type="submit" class="chat-send" id="chatSend" aria-label="Send">↑</button>
+    </form>
+    <div class="chat-note">
+      <span class="ko">안내문을 바탕으로 자동 응답합니다. 중요한 내용은 호스트에게 확인해 주세요.</span>
+      <span class="en">Answers are generated from this guide. Please confirm important details with your host.</span>
+    </div>
+  </div>
+
   <div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
     <button type="button" class="close" aria-label="Close">✕</button>
     <img alt="">
@@ -1404,7 +1519,181 @@
         if (e.key === 'Escape' && lb.classList.contains('on')) closeLb();
       });
 
+      /* ---- 안내 도우미 (챗봇) ---- */
+      /* 배포한 Worker 주소를 여기에 넣으면 채팅 버튼이 나타납니다.
+         예: 'https://arangjae-chat.내계정.workers.dev' */
+      var CHAT_ENDPOINT = '';
+
+      (function chatbot() {
+        if (!CHAT_ENDPOINT) return; /* 주소가 없으면 아예 표시하지 않음 */
+
+        var fab = document.getElementById('chatFab');
+        var panel = document.getElementById('chatPanel');
+        var log = document.getElementById('chatLog');
+        var form = document.getElementById('chatForm');
+        var input = document.getElementById('chatInput');
+        var send = document.getElementById('chatSend');
+        var history = [];
+        var busy = false;
+
+        var SUGGESTIONS = {
+          ko: ['짐을 미리 맡길 수 있나요?', '체크인 몇 시부터인가요?', 'Wi-Fi 비밀번호가 뭔가요?', '쓰레기는 어떻게 버리나요?'],
+          en: ['Can I store my luggage early?', 'What time is check-in?', 'What is the Wi-Fi password?', 'How do I take out the trash?']
+        };
+
+        fab.hidden = false;
+
+        function lang() { return root.getAttribute('data-lang') === 'en' ? 'en' : 'ko'; }
+
+        function syncPlaceholder() { input.placeholder = input.getAttribute('data-ph-' + lang()); }
+        syncPlaceholder();
+        document.querySelectorAll('[data-setlang]').forEach(function (b) {
+          b.addEventListener('click', syncPlaceholder);
+        });
+
+        function bubble(cls, text) {
+          var el = document.createElement('div');
+          el.className = 'chat-msg ' + cls;
+          el.textContent = text || '';
+          log.appendChild(el);
+          log.scrollTop = log.scrollHeight;
+          return el;
+        }
+
+        function greet() {
+          log.innerHTML = '';
+          bubble('bot', lang() === 'en'
+            ? 'Hello! Ask me anything about your stay — check-in, luggage, appliances, the neighbourhood.'
+            : '안녕하세요! 숙소에 관해 궁금한 점을 물어보세요. 체크인, 짐 보관, 가전 사용법, 주변 정보 모두 답해 드립니다.');
+
+          var wrap = document.createElement('div');
+          wrap.className = 'chat-sugg';
+          SUGGESTIONS[lang()].forEach(function (q) {
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.textContent = q;
+            b.addEventListener('click', function () { wrap.remove(); ask(q); });
+            wrap.appendChild(b);
+          });
+          log.appendChild(wrap);
+        }
+
+        function open() {
+          panel.hidden = false;
+          requestAnimationFrame(function () { panel.classList.add('on'); });
+          fab.hidden = true;
+          document.body.style.overflow = 'hidden';
+          if (!history.length) greet();
+          setTimeout(function () { input.focus(); }, 280);
+        }
+
+        function close() {
+          panel.classList.remove('on');
+          fab.hidden = false;
+          document.body.style.overflow = '';
+          setTimeout(function () { panel.hidden = true; }, 260);
+        }
+
+        fab.addEventListener('click', open);
+        document.getElementById('chatClose').addEventListener('click', close);
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && !panel.hidden) close();
+        });
+
+        input.addEventListener('input', function () {
+          input.style.height = 'auto';
+          input.style.height = Math.min(input.scrollHeight, 110) + 'px';
+        });
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            if (form.requestSubmit) form.requestSubmit();
+            else form.dispatchEvent(new Event('submit', { cancelable: true }));
+          }
+        });
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var q = input.value.trim();
+          if (q) ask(q);
+        });
+
+        function ask(question) {
+          if (busy) return;
+          busy = true;
+          send.disabled = true;
+          input.value = '';
+          input.style.height = 'auto';
+
+          bubble('me', question);
+          history.push({ role: 'user', content: question });
+
+          var out = bubble('bot');
+          out.innerHTML = '<span class="dots"><span></span><span></span><span></span></span>';
+          var answer = '';
+
+          fetch(CHAT_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messages: history.slice(-12) })
+          }).then(function (res) {
+            if (!res.ok || !res.body) {
+              return res.json().catch(function () { return {}; }).then(function (j) {
+                throw new Error(j.error || '');
+              });
+            }
+            var reader = res.body.getReader();
+            var dec = new TextDecoder();
+            var buf = '';
+
+            return (function pump() {
+              return reader.read().then(function (r) {
+                if (r.done) return;
+                buf += dec.decode(r.value, { stream: true });
+                var i;
+                while ((i = buf.indexOf('\n')) >= 0) {
+                  var line = buf.slice(0, i).trim();
+                  buf = buf.slice(i + 1);
+                  if (!line || line.charAt(0) === ':' || line.indexOf('data:') !== 0) continue;
+                  var data = line.slice(5).trim();
+                  if (data === '[DONE]') return;
+                  try {
+                    var j = JSON.parse(data);
+                    var d = j.choices && j.choices[0] && j.choices[0].delta;
+                    if (d && d.content) {
+                      answer += d.content;
+                      out.textContent = answer;
+                      log.scrollTop = log.scrollHeight;
+                    }
+                  } catch (err) { /* 조각난 줄은 건너뜀 */ }
+                }
+                return pump();
+              });
+            })();
+          }).then(function () {
+            if (answer) {
+              history.push({ role: 'assistant', content: answer });
+            } else {
+              out.remove();
+              bubble('err', lang() === 'en'
+                ? 'Sorry, no answer came back. Please try again.'
+                : '답변을 받지 못했습니다. 다시 시도해 주세요.');
+            }
+          }).catch(function (err) {
+            out.remove();
+            bubble('err', (err && err.message) || (lang() === 'en'
+              ? 'Something went wrong. Please message your host directly.'
+              : '오류가 발생했습니다. 호스트에게 직접 메시지를 보내주세요.'));
+          }).then(function () {
+            busy = false;
+            send.disabled = false;
+            log.scrollTop = log.scrollHeight;
+          });
+        }
+      })();
+
       /* ---- top bar turns solid once the hero is scrolled past ---- */
+
       var bar = document.querySelector('.topbar');
       var hero = document.querySelector('.hero');
 
