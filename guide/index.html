@@ -293,6 +293,19 @@
     .sub-body { padding: 15px; }
     .sub-body ol, .sub-body ul { margin-bottom: 0; }
 
+    /* ---------- faq ---------- */
+    #faq .sub > summary { align-items: flex-start; line-height: 1.55; font-weight: 600; }
+    #faq .sub > summary::after { flex: none; margin-top: 2px; }
+    #faq .sub-body > :first-child { margin-top: 0; }
+    .jumplinks { list-style: none; margin: 0; }
+    .jumplinks li { border-bottom: 1px solid var(--line); margin: 0; }
+    .jumplinks li:last-child { border-bottom: none; }
+    .jumplinks a {
+      display: flex; align-items: center; gap: 10px; padding: 11px 2px;
+      text-decoration: none; color: var(--body); font-size: 0.89rem;
+    }
+    .jumplinks a .go { margin-left: auto; color: var(--muted); }
+
     /* ---------- place list ---------- */
     .places { list-style: none; margin: 0; }
     .places li { border-bottom: 1px solid var(--line); margin: 0; }
@@ -429,6 +442,7 @@
       <a href="#rules"><span class="ko">이용 규칙</span><span class="en">House rules</span></a>
       <a href="#nearby"><span class="ko">주변 정보</span><span class="en">Nearby</span></a>
       <a href="#emergency"><span class="ko">비상 안내</span><span class="en">Emergency</span></a>
+      <a href="#faq">FAQ</a>
     </nav>
 
     <!-- ============ DIRECTIONS ============ -->
@@ -1002,6 +1016,292 @@
       </div>
     </details>
 
+    <!-- ============ FAQ ============ -->
+    <details class="sec" id="faq">
+      <summary><span class="ico">💡</span><span class="ko">자주 묻는 질문</span><span class="en">FAQ</span></summary>
+      <div class="sec-body">
+
+        <h3><span class="ko">짐 보관</span><span class="en">Luggage Storage</span></h3>
+
+        <details class="sub">
+          <summary><span class="ko">체크인 전에 짐을 맡길 수 있나요?</span><span class="en">Can I drop off my luggage before check-in?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko">네, <strong>낮 12시부터</strong> 맡기실 수 있습니다. 무료입니다. 도착 전에 Airbnb 또는 Booking.com 메시지로 미리 알려주세요.</span>
+              <span class="en">Yes — from <strong>12:00 noon</strong>, free of charge. Please let us know in advance via Airbnb or Booking.com message.</span>
+            </p>
+            <p>
+              <span class="ko">보관 장소는 예약하신 층(2층 아라 / 3층 마루)의 <strong>엘리베이터 앞 공간</strong>입니다.</span>
+              <span class="en">Leave it in the <strong>elevator lobby on your floor</strong> (2F Ara / 3F Maru).</span>
+            </p>
+            <figure>
+              <img loading="lazy" src="img/faq-luggage-checkin.jpg" alt="Luggage drop-off spot in the elevator lobby" width="1000" height="539">
+              <figcaption>
+                <span class="ko">엘리베이터 앞 ★ 표시 자리</span>
+                <span class="en">The spot marked ★ beside the elevator</span>
+              </figcaption>
+            </figure>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary><span class="ko">체크아웃 후에도 짐을 맡길 수 있나요?</span><span class="en">Can I leave my luggage after check-out?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko">네, <strong>당일 오후 4시까지</strong> 가능합니다. 무료입니다. 그보다 늦게까지 필요하시면 메시지로 말씀해 주세요. 가능한 만큼 맞춰 드리겠습니다.</span>
+              <span class="en">Yes — until <strong>4:00 PM on the same day</strong>, free of charge. If you need longer, send us a message and we will do our best to accommodate you.</span>
+            </p>
+            <p>
+              <span class="ko">보관 장소는 <strong>1층과 2층 사이 계단참</strong>입니다.</span>
+              <span class="en">Leave it on the <strong>stair landing between the 1st and 2nd floors</strong>.</span>
+            </p>
+            <figure>
+              <img loading="lazy" src="img/faq-luggage-checkout.jpg" alt="Luggage left on the stair landing between the 1st and 2nd floors" width="1000" height="1333">
+              <figcaption>
+                <span class="ko">1층과 2층 사이 계단참</span>
+                <span class="en">Stair landing between 1F and 2F</span>
+              </figcaption>
+            </figure>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary><span class="ko">맡긴 짐은 안전한가요?</span><span class="en">Is my luggage safe there?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko">두 곳 모두 문이 잠기지 않은 개방된 공간이지만, <strong>CCTV로 녹화되고 있습니다.</strong></span>
+              <span class="en">Both spots are open and not locked, but they are <strong>covered by CCTV</strong>.</span>
+            </p>
+            <div class="warn">
+              <span class="ko">다만 분실이나 파손에 대해서는 저희가 책임지기 어렵습니다. 여권, 현금, 노트북 같은 귀중품은 꼭 직접 지니고 다녀 주세요.</span>
+              <span class="en">That said, we cannot take responsibility for loss or damage. Please keep valuables such as your passport, cash and laptop with you.</span>
+            </div>
+          </div>
+        </details>
+
+        <h3><span class="ko">체크인 · 체크아웃</span><span class="en">Check-in &amp; Check-out</span></h3>
+
+        <details class="sub">
+          <summary><span class="ko">더 일찍 체크인할 수 있나요?</span><span class="en">Can I check in earlier?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko">체크인은 오후 4시부터입니다. 전날 객실이 비어 있지 않으면 청소 시간이 필요해 미리 약속드리기는 어렵습니다.</span>
+              <span class="en">Check-in starts at 4:00 PM. If the room is occupied the night before, we need that time to clean it, so we cannot promise an early check-in.</span>
+            </p>
+            <p>
+              <span class="ko">다만 청소가 예정보다 일찍 끝나면 <strong>1~2시간 정도 일찍 입실</strong>하실 수 있고, 가능해지는 대로 메시지로 알려 드립니다. <strong>추가 요금은 없습니다.</strong></span>
+              <span class="en">However, if cleaning finishes ahead of schedule you may be able to come in <strong>1–2 hours early</strong>, and we will message you as soon as we know. <strong>There is no extra charge.</strong></span>
+            </p>
+            <div class="note">
+              <span class="ko">일찍 도착하시면 <strong>짐을 맡기고 근처를 둘러보시는 편</strong>을 권해 드립니다. 짐 보관은 낮 12시부터 가능합니다.</span>
+              <span class="en">If you arrive early, we recommend <strong>dropping off your luggage and exploring the neighbourhood</strong> — luggage storage is available from 12:00 noon.</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary><span class="ko">체크아웃 시간을 늦출 수 있나요?</span><span class="en">Can I check out later?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko">다음 게스트를 맞을 청소 시간이 필요해 체크아웃 시간(오전 11시) 연장은 어렵습니다.</span>
+              <span class="en">We need the time to prepare the room for the next guest, so we are not able to extend the 11:00 AM check-out.</span>
+            </p>
+            <div class="note">
+              <span class="ko">대신 <strong>오후 4시까지 짐을 맡아 드리니</strong> 체크아웃 후에도 편하게 일정을 보내실 수 있습니다.</span>
+              <span class="en">Instead, <strong>we will keep your luggage until 4:00 PM</strong>, so you can enjoy the rest of your day.</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary><span class="ko">밤늦게 도착해도 되나요?</span><span class="en">Can I arrive late at night?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko">네, 입실 마감 시간은 없습니다. 몇 시에 도착하셔도 괜찮습니다.</span>
+              <span class="en">Yes — there is no arrival cut-off. Any time is fine.</span>
+            </p>
+            <p>
+              <span class="ko">건물 1층 출입문은 밤에도 잠기지 않아 언제든 들어오실 수 있습니다. 다만 도착 예정 시간을 메시지로 미리 알려주시면 더 잘 준비해 드릴 수 있습니다.</span>
+              <span class="en">The building's ground-floor entrance is not locked at night, so you can come in whenever you arrive. Please message us your estimated arrival time so we can be ready for you.</span>
+            </p>
+          </div>
+        </details>
+
+        <h3><span class="ko">비품 · 청소</span><span class="en">Amenities &amp; Cleaning</span></h3>
+
+        <details class="sub">
+          <summary><span class="ko">수건은 어떤 것이 제공되나요?</span><span class="en">What towels are provided?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko">객실에는 한국에서 흔히 쓰는 <strong>40 × 80cm 크기의 수건</strong>이 준비되어 있습니다.</span>
+              <span class="en">Each room is stocked with <strong>40 × 80 cm towels</strong>, the size commonly used in Korea.</span>
+            </p>
+            <div class="note">
+              <span class="ko">더 큰 <strong>목욕 수건이 필요하시면 무료로 준비해 드립니다.</strong> 다만 미리 세팅해 두어야 하므로 <strong>도착하시기 전에</strong> 메시지로 요청해 주세요.</span>
+              <span class="en">If you would like larger <strong>bath towels, we will provide them free of charge.</strong> We need to set them out in advance, so please <strong>message us before you arrive</strong>.</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary><span class="ko">어떤 비품이 있나요?</span><span class="en">What amenities are provided?</span></summary>
+          <div class="sub-body">
+            <h4><span class="ko">준비되어 있습니다</span><span class="en">Provided</span></h4>
+            <p>
+              <span class="ko">슬리퍼 · 샴푸 · 바디워시 · 칫솔 · 치약 · 헤어드라이어 · 고데기 · 다리미 · 세탁 세제 · 섬유유연제 · 주방 세제 · 일회용 수세미 · 화장실 휴지 · 각티슈 · 생수 · 커피 · 차 · 정수기 · 구급상자 · 러기지 저울(수하물 무게 측정)</span>
+              <span class="en">Slippers · shampoo · body wash · toothbrush · toothpaste · hair dryer · hair straightener · iron · laundry detergent · fabric softener · dish soap · disposable sponges · toilet paper · tissues · bottled water · coffee · tea · water purifier · first-aid kit · luggage scale</span>
+            </p>
+            <h4><span class="ko">없습니다</span><span class="en">Not provided</span></h4>
+            <p>
+              <span class="ko">우산 · 변압기</span>
+              <span class="en">Umbrellas · voltage transformers</span>
+            </p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary><span class="ko">숙박 중에 청소를 받을 수 있나요?</span><span class="en">Is cleaning available during my stay?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko"><strong>5박 이상</strong> 머무시는 경우, 요청하시면 숙박 중에 청소해 드립니다. <strong>무료</strong>입니다.</span>
+              <span class="en">For stays of <strong>5 nights or more</strong>, we will clean your room on request, <strong>free of charge</strong>.</span>
+            </p>
+            <p>
+              <span class="ko">이때 쓰레기도 함께 치워 드리니 필요하시면 메시지로 말씀해 주세요.</span>
+              <span class="en">We will take out the trash at the same time — just send us a message.</span>
+            </p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary><span class="ko">사용한 수건과 침구는 어디에 두고 가나요?</span><span class="en">Where do I leave used towels and bedding?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko">바구니에 담아 두시거나 세탁기 안에 넣어 주시면 됩니다.</span>
+              <span class="en">Please put them in the basket, or inside the washing machine.</span>
+            </p>
+          </div>
+        </details>
+
+        <h3><span class="ko">생활</span><span class="en">Daily Life</span></h3>
+
+        <details class="sub">
+          <summary><span class="ko">배달 음식을 시켜도 되나요?</span><span class="en">Can I order food delivery?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko">네, 얼마든지 가능합니다. 배달 기사님이 <strong>객실 문 앞까지</strong> 와 주시고, 공동현관 비밀번호는 따로 없어 바로 올라오실 수 있습니다.</span>
+              <span class="en">Absolutely. Delivery riders come <strong>right to your door</strong>, and there is no building entrance code, so they can come straight up.</span>
+            </p>
+            <p>
+              <span class="ko">배달 앱에는 아래 주소를 입력해 주세요.</span>
+              <span class="en">Enter the Korean address below in the delivery app — copy it exactly.</span>
+            </p>
+            <div class="copyrow">
+              <div class="val">
+                <small><span class="ko">2층 아라</span><span class="en">2F ARA</span></small>
+                서울 중구 마른내로12길 7-1, 아랑재 2층
+              </div>
+              <button type="button" class="copybtn" data-copy="서울 중구 마른내로12길 7-1, 아랑재 2층">
+                <span class="ko">복사</span><span class="en">Copy</span>
+              </button>
+            </div>
+            <div class="copyrow">
+              <div class="val">
+                <small><span class="ko">3층 마루</span><span class="en">3F MARU</span></small>
+                서울 중구 마른내로12길 7-1, 아랑재 3층
+              </div>
+              <button type="button" class="copybtn" data-copy="서울 중구 마른내로12길 7-1, 아랑재 3층">
+                <span class="ko">복사</span><span class="en">Copy</span>
+              </button>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary><span class="ko">콘센트가 어떤 타입인가요? 제 플러그를 꽂을 수 있나요?</span><span class="en">What type of power outlet is there? Will my plug fit?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko">객실 벽에 <strong>멀티 콘센트</strong>가 설치되어 있습니다. 한국 · 일본 · 미국 · 유럽 · 영국 등 대부분의 플러그를 변환 어댑터 없이 그대로 꽂으실 수 있고, <strong>USB-A와 USB-C 충전 포트</strong>도 함께 있어 휴대폰은 케이블만 있으면 됩니다.</span>
+              <span class="en">Each room has a <strong>universal multi-socket</strong> on the wall. Plugs from Korea, Japan, the US, Europe and the UK fit directly without an adapter, and there are <strong>USB-A and USB-C charging ports</strong> as well — for your phone you only need a cable.</span>
+            </p>
+            <figure>
+              <img loading="lazy" src="img/faq-outlet.jpg" alt="Universal multi-socket with USB-A and USB-C ports" width="1000" height="1080">
+            </figure>
+            <div class="warn">
+              <span class="ko"><strong>⚠️ 다만 전압은 220V이고, 변압기는 따로 준비되어 있지 않습니다.</strong><br>
+                100V나 110V 전용 기기(일본 · 미국에서 쓰던 드라이어, 고데기 등)를 그대로 꽂으면 고장이나 화재의 위험이 있으니 반드시 기기에 표시된 전압을 확인해 주세요.<br>
+                휴대폰 충전기와 노트북 어댑터는 대부분 100~240V 겸용이라 그대로 사용하셔도 됩니다.</span>
+              <span class="en"><strong>⚠️ However, the voltage is 220V, and we do not provide voltage transformers.</strong><br>
+                Devices made for 100V or 110V only — such as hair dryers or straighteners from Japan or the US — can be damaged or catch fire. Always check the voltage printed on your device.<br>
+                Most phone chargers and laptop adapters are rated 100–240V and work as they are.</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary><span class="ko">에어컨 리모컨은 어디 있나요?</span><span class="en">Where is the air conditioner remote?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko">에어컨 리모컨은 <strong>객실 입구 벽에 거치</strong>되어 있습니다.</span>
+              <span class="en">The remote is <strong>mounted on the wall by the room entrance</strong>.</span>
+            </p>
+            <p>
+              <span class="ko">이 리모컨 하나로 객실과 거실 에어컨을 모두 조작하실 수 있습니다. 거실에는 별도의 리모컨이 없습니다.</span>
+              <span class="en">That single remote controls both the bedroom and the living-room air conditioners. There is no separate remote in the living room.</span>
+            </p>
+            <div class="note">
+              <span class="ko">버튼별 사용법은 <a href="#appliances">가전 사용법</a>에서 확인하실 수 있습니다.</span>
+              <span class="en">For what each button does, see <a href="#appliances">Appliances</a>.</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary><span class="ko">어디서 흡연할 수 있나요?</span><span class="en">Where can I smoke?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko">건물 안은 객실과 복도를 포함해 <strong>전 구역 금연</strong>입니다.</span>
+              <span class="en">The entire building, including rooms and hallways, is <strong>strictly non-smoking</strong>.</span>
+            </p>
+            <p>
+              <span class="ko">흡연은 <strong>건물 현관 앞 외부</strong>에서 부탁드립니다. 주변에 주민들이 거주하고 있으니 꽁초는 꼭 수거해 주시고, 늦은 시간에는 조용히 해주세요.</span>
+              <span class="en">Please smoke <strong>outside, in front of the building entrance</strong>. Neighbours live nearby, so please take your cigarette butts with you and keep noise down late at night.</span>
+            </p>
+          </div>
+        </details>
+
+        <h3><span class="ko">교통</span><span class="en">Getting Here</span></h3>
+
+        <details class="sub">
+          <summary><span class="ko">공항에서 어떻게 오나요?</span><span class="en">How do I get here from the airport?</span></summary>
+          <div class="sub-body">
+            <p>
+              <span class="ko">지하철과 공항버스 6015번 경로는 <a href="#directions">오시는 길</a>에 자세히 안내되어 있습니다.</span>
+              <span class="en">Subway and Airport Bus 6015 routes are covered in <a href="#directions">Getting Here</a>.</span>
+            </p>
+            <p>
+              <span class="ko"><strong>공항 픽업 밴</strong>이 필요하시면 메시지로 말씀해 주세요. 저희가 직접 운영하지는 않지만 믿을 수 있는 기사님을 연결해 드립니다.</span>
+              <span class="en">If you need an <strong>airport pickup van</strong>, just send us a message. We do not run it ourselves, but we can put you in touch with a driver we trust.</span>
+            </p>
+            <div class="note">
+              <span class="ko">요금은 <strong>인천공항 기준 보통 10만 원 정도</strong>입니다. 저희가 직접 정하는 요금이 아니어서 시기나 차량에 따라 달라질 수 있으니, 요청해 주시면 정확한 금액을 확인해 안내해 드리겠습니다.</span>
+              <span class="en">The fare is <strong>usually around KRW 100,000 from Incheon Airport</strong>. We do not set the price, so it can vary by season and vehicle — ask us and we will confirm the exact amount for you.</span>
+            </div>
+          </div>
+        </details>
+
+        <h3><span class="ko">가이드에서 바로 찾기</span><span class="en">More in this guide</span></h3>
+        <ul class="jumplinks">
+          <li><a href="#waste">🗑️ <span class="ko">쓰레기는 어떻게 버리나요?</span><span class="en">How do I dispose of trash?</span><span class="go">›</span></a></li>
+          <li><a href="#parking">🅿️ <span class="ko">주차할 수 있나요?</span><span class="en">Where can I park?</span><span class="go">›</span></a></li>
+          <li><a href="#directions">📍 <span class="ko">주소가 어떻게 되나요?</span><span class="en">What is the address?</span><span class="go">›</span></a></li>
+          <li><a href="#nearby">🍽️ <span class="ko">근처에 식당이나 편의점이 있나요?</span><span class="en">Any restaurants or shops nearby?</span><span class="go">›</span></a></li>
+          <li><a href="#appliances">🎛️ <span class="ko">세탁기 · 건조기 · TV는 어떻게 쓰나요?</span><span class="en">How do I use the washer, dryer and TV?</span><span class="go">›</span></a></li>
+        </ul>
+
+      </div>
+    </details>
+
     <!-- ============ CONTACT ============ -->
     <details class="sec" id="contact" open>
       <summary><span class="ico">💬</span><span class="ko">문의하기</span><span class="en">Need Assistance?</span></summary>
@@ -1148,7 +1448,7 @@
         setTimeout(function () { jumpTo(el); }, 350);
       }
 
-      document.querySelectorAll('.secnav a, .quick a[href^="#"]').forEach(function (a) {
+      document.querySelectorAll('.secnav a, .quick a[href^="#"], .jumplinks a').forEach(function (a) {
         a.addEventListener('click', function () { openTarget(a.getAttribute('href')); });
       });
       window.addEventListener('hashchange', revealFromHash);
