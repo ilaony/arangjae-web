@@ -27,6 +27,9 @@ const LIMIT_PER_MINUTE = 6;     // IP당 분당 질문 수
 const LIMIT_PER_DAY = 60;       // IP당 하루 질문 수
 const GUIDE_CACHE_SECONDS = 3600;
 
+const LOG_RETENTION_DAYS = 90; // 대화 기록 보관 기간
+const LOG_PAGE_SIZE = 150;     // 관리자 페이지에 한 번에 보여줄 개수
+
 // ── CORS ──────────────────────────────────────────────
 function corsHeaders(origin) {
   const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
@@ -160,6 +163,103 @@ function normalizeMessages(input) {
   return cleaned;
 }
 
+// ── 대화 기록 ─────────────────────────────────────────
+// 질문과 답변만 남깁니다. IP나 접속 정보는 저장하지 않습니다.
+async function logConversation(env, question, stream) {
+  if (!env.RATE) return;
+
+  let answer = '';
+  try {
+    const reader = stream.getReader();
+    const dec = new TextDecoder();
+    let buf = '';
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let i;
+      while ((i = buf.indexOf('\n')) >= 0) {
+        const line = buf.slice(0, i).trim();
+        buf = buf.slice(i + 1);
+        if (!line || line[0] === ':' || !line.startsWith('data:')) continue;
+        const data = line.slice(5).trim();
+        if (data === '[DONE]') break;
+        try {
+          const j = JSON.parse(data);
+          const d = j.choices && j.choices[0] && j.choices[0].delta;
+          if (d && d.content) answer += d.content;
+        } catch { /* 조각난 줄은 건너뜀 */ }
+      }
+    }
+  } catch { /* 기록 실패가 응답을 막아서는 안 됨 */ }
+
+  const now = new Date();
+  const key = `log:${now.toISOString()}:${Math.random().toString(36).slice(2, 8)}`;
+  try {
+    await env.RATE.put(key, JSON.stringify({ t: now.toISOString(), q: question, a: answer }), {
+      expirationTtl: LOG_RETENTION_DAYS * 86400,
+    });
+  } catch { /* 저장 실패는 무시 */ }
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+async function renderLogPage(env) {
+  const listed = await env.RATE.list({ prefix: 'log:', limit: 1000 });
+  const keys = listed.keys.map((k) => k.name).sort().reverse().slice(0, LOG_PAGE_SIZE);
+  const rows = await Promise.all(
+    keys.map((k) => env.RATE.get(k).then((v) => { try { return JSON.parse(v); } catch { return null; } }))
+  );
+
+  const items = rows.filter(Boolean).map((r) => {
+    const when = new Date(r.t).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', dateStyle: 'short', timeStyle: 'short' });
+    return `<details class="row">
+      <summary><span class="when">${escapeHtml(when)}</span><span class="q">${escapeHtml(r.q)}</span></summary>
+      <div class="a">${escapeHtml(r.a || '(답변 없음)')}</div>
+    </details>`;
+  }).join('\n');
+
+  return `<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow"><title>아랑재 챗봇 대화 기록</title>
+<style>
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:#faf8f5;color:#4a4441;font:15px/1.6 'Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  padding:env(safe-area-inset-top) 0 calc(40px + env(safe-area-inset-bottom))}
+.wrap{max-width:720px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.15rem;color:#2c2c2c;margin:0 0 4px}
+.sub{font-size:.82rem;color:#8a7e72;margin-bottom:18px}
+#filter{width:100%;padding:11px 13px;border:1px solid #e8e0d8;border-radius:11px;font:inherit;background:#fff;margin-bottom:14px}
+.row{background:#fff;border:1px solid #e8e0d8;border-radius:12px;margin-bottom:8px;overflow:hidden}
+.row>summary{list-style:none;cursor:pointer;padding:13px 15px;display:flex;flex-direction:column;gap:3px}
+.row>summary::-webkit-details-marker{display:none}
+.when{font-size:.72rem;color:#b3aaa1}
+.q{font-weight:600;color:#2c2c2c;font-size:.92rem}
+.a{padding:0 15px 14px;font-size:.88rem;color:#4a4441;white-space:pre-wrap;border-top:1px solid #f0ece7;padding-top:12px;margin-top:2px}
+.empty{padding:40px 0;text-align:center;color:#8a7e72}
+</style></head><body><div class="wrap">
+<h1>아랑재 챗봇 대화 기록</h1>
+<div class="sub">최근 ${rows.filter(Boolean).length}건 · ${LOG_RETENTION_DAYS}일 보관 · 질문을 누르면 답변이 보입니다</div>
+<input id="filter" placeholder="검색 (예: 짐, 수건, check-in)" autocomplete="off">
+<div id="list">${items || '<div class="empty">아직 기록이 없습니다.</div>'}</div>
+</div>
+<script>
+document.getElementById('filter').addEventListener('input',function(){
+  var q=this.value.trim().toLowerCase();
+  document.querySelectorAll('#list .row').forEach(function(el){
+    el.style.display = !q || el.textContent.toLowerCase().indexOf(q)>=0 ? '' : 'none';
+  });
+});
+</script></body></html>`;
+}
+
 // ── 진입점 ────────────────────────────────────────────
 export default {
   async fetch(request, env, ctx) {
@@ -168,6 +268,31 @@ export default {
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
     }
+
+    // 관리자용 대화 기록 페이지
+    // https://<worker주소>/log?key=<ADMIN_KEY>
+    const url = new URL(request.url);
+    if (request.method === 'GET' && url.pathname === '/log') {
+      const given = url.searchParams.get('key') || '';
+      // 키가 없거나 틀리면 존재 자체를 알리지 않기 위해 404
+      if (!env.ADMIN_KEY || given !== env.ADMIN_KEY) {
+        return new Response('Not found', { status: 404 });
+      }
+      if (!env.RATE) {
+        return new Response('기록 저장소(KV)가 연결되어 있지 않습니다.', {
+          status: 503,
+          headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+        });
+      }
+      return new Response(await renderLogPage(env), {
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'no-store',
+          'X-Robots-Tag': 'noindex, nofollow',
+        },
+      });
+    }
+
     if (request.method !== 'POST') {
       return json({ error: 'POST 요청만 받습니다.' }, 405, origin);
     }
@@ -242,7 +367,11 @@ export default {
       return json({ error: '답변을 생성하지 못했습니다. 잠시 후 다시 시도해 주세요.' }, 502, origin);
     }
 
-    return new Response(upstream.body, {
+    // 스트림을 둘로 나눠 하나는 게스트에게, 하나는 기록용으로 보냅니다.
+    const [toGuest, toLog] = upstream.body.tee();
+    ctx.waitUntil(logConversation(env, messages[messages.length - 1].content, toLog));
+
+    return new Response(toGuest, {
       headers: {
         'Content-Type': 'text/event-stream; charset=utf-8',
         'Cache-Control': 'no-cache',
