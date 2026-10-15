@@ -1692,6 +1692,53 @@
         }
       })();
 
+      /* ---- 방문 기록 (익명) ---- */
+      /* 쿠키도 식별자도 쓰지 않습니다. 방문 한 건에 대해
+         "언제 / 어느 언어로 / 어디서 들어와 / 어떤 항목을 열었나" 만 남깁니다. */
+      (function track() {
+        if (!CHAT_ENDPOINT) return;
+        try {
+          if (navigator.doNotTrack === '1' || window.doNotTrack === '1') return;
+        } catch (e) { /* 접근이 막힌 환경은 그냥 진행 */ }
+
+        function send(payload) {
+          try {
+            var url = CHAT_ENDPOINT + '/track';
+            var body = JSON.stringify(payload);
+            /* text/plain 으로 보내야 사전 확인(preflight) 없이 바로 전송됩니다. */
+            if (navigator.sendBeacon) {
+              navigator.sendBeacon(url, new Blob([body], { type: 'text/plain;charset=UTF-8' }));
+            } else {
+              fetch(url, { method: 'POST', body: body, keepalive: true, mode: 'cors' });
+            }
+          } catch (e) { /* 기록 실패가 페이지를 방해해서는 안 됨 */ }
+        }
+
+        var ref = '';
+        try { ref = document.referrer || ''; } catch (e) { }
+        send({ type: 'view', ref: ref, lang: root.getAttribute('data-lang') });
+
+        var opened = {};
+        document.querySelectorAll('details.sec').forEach(function (d) {
+          d.addEventListener('toggle', function () {
+            if (d.open && d.id) opened[d.id] = 1;
+          });
+        });
+
+        var sent = false;
+        function flush() {
+          if (sent) return;
+          var list = Object.keys(opened);
+          if (!list.length) return;
+          sent = true;
+          send({ type: 'sections', opened: list });
+        }
+        window.addEventListener('pagehide', flush);
+        document.addEventListener('visibilitychange', function () {
+          if (document.visibilityState === 'hidden') flush();
+        });
+      })();
+
       /* ---- top bar turns solid once the hero is scrolled past ---- */
 
       var bar = document.querySelector('.topbar');

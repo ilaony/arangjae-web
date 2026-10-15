@@ -29,6 +29,15 @@ const GUIDE_CACHE_SECONDS = 3600;
 
 const LOG_RETENTION_DAYS = 90; // 대화 기록 보관 기간
 const LOG_PAGE_SIZE = 150;     // 관리자 페이지에 한 번에 보여줄 개수
+const VISIT_RETENTION_DAYS = 90; // 방문 기록 보관 기간
+
+// 방문 기록에서 받아들일 섹션 id (이 목록에 없으면 버립니다)
+const SECTION_IDS = ['directions', 'parking', 'wifi', 'appliances', 'waste', 'rules', 'nearby', 'emergency', 'faq', 'contact'];
+const SECTION_LABELS = {
+  directions: '오시는 길', parking: '주차', wifi: 'Wi-Fi', appliances: '가전 사용법',
+  waste: '쓰레기', rules: '이용 규칙', nearby: '주변 정보', emergency: '비상 안내',
+  faq: '자주 묻는 질문', contact: '문의하기',
+};
 
 // ── CORS ──────────────────────────────────────────────
 function corsHeaders(origin) {
@@ -202,6 +211,31 @@ async function logConversation(env, question, stream) {
   } catch { /* 저장 실패는 무시 */ }
 }
 
+// ── 방문 기록 ─────────────────────────────────────────
+// 쿠키도, IP도, 식별자도 남기지 않습니다.
+// 방문 한 건에 "언제 / 어느 언어로 / 어디서 들어와 / 어떤 섹션을 열었나" 만 남깁니다.
+// 값은 비워두고 메타데이터에만 담아서, 조회할 때 목록 한 번으로 전부 읽습니다.
+async function recordVisit(env, body) {
+  if (!env.RATE) return;
+  const now = new Date();
+  const stamp = `${now.toISOString()}:${Math.random().toString(36).slice(2, 8)}`;
+  const ttl = { expirationTtl: VISIT_RETENTION_DAYS * 86400 };
+
+  try {
+    if (body.type === 'view') {
+      let ref = '';
+      if (typeof body.ref === 'string' && body.ref) {
+        try { ref = new URL(body.ref).hostname.slice(0, 60); } catch { ref = ''; }
+      }
+      const lang = body.lang === 'en' ? 'en' : 'ko';
+      await env.RATE.put(`vis:${stamp}`, '', { ...ttl, metadata: { ref, lang } });
+    } else if (body.type === 'sections' && Array.isArray(body.opened)) {
+      const opened = body.opened.filter((x) => SECTION_IDS.includes(x)).slice(0, SECTION_IDS.length);
+      if (opened.length) await env.RATE.put(`sec:${stamp}`, '', { ...ttl, metadata: { opened } });
+    }
+  } catch { /* 기록 실패는 무시 */ }
+}
+
 function escapeHtml(s) {
   return String(s)
     .replace(/&/g, '&amp;')
@@ -210,14 +244,58 @@ function escapeHtml(s) {
     .replace(/"/g, '&quot;');
 }
 
-async function renderLogPage(env) {
+const ADMIN_CSS = `
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:#faf8f5;color:#4a4441;font:15px/1.6 'Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  padding:env(safe-area-inset-top) 0 calc(40px + env(safe-area-inset-bottom))}
+.wrap{max-width:720px;margin:0 auto;padding:22px 16px}
+h1{font-size:1.15rem;color:#2c2c2c;margin:0 0 14px}
+.tabs{display:flex;gap:7px;margin-bottom:16px}
+.tabs a{flex:1;text-align:center;padding:9px 10px;border-radius:11px;border:1px solid #e8e0d8;
+  background:#fff;color:#4a4441;text-decoration:none;font-size:.86rem;font-weight:600}
+.tabs a.on{background:#2c2c2c;border-color:#2c2c2c;color:#fff}
+.sub{font-size:.8rem;color:#8a7e72;margin:-6px 0 16px}
+h2{font-size:.95rem;color:#2c2c2c;margin:26px 0 9px}
+h2:first-of-type{margin-top:4px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e8e0d8;border-radius:12px;overflow:hidden}
+th,td{padding:10px 13px;text-align:left;font-size:.87rem;border-bottom:1px solid #f0ece7}
+th{font-size:.74rem;color:#8a7e72;font-weight:600;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.pct{text-align:right;color:#8a7e72;font-size:.8rem;white-space:nowrap}
+#filter{width:100%;padding:11px 13px;border:1px solid #e8e0d8;border-radius:11px;font:inherit;background:#fff;margin-bottom:14px}
+.row{background:#fff;border:1px solid #e8e0d8;border-radius:12px;margin-bottom:8px;overflow:hidden}
+.row>summary{list-style:none;cursor:pointer;padding:13px 15px;display:flex;flex-direction:column;gap:3px}
+.row>summary::-webkit-details-marker{display:none}
+.when{font-size:.72rem;color:#b3aaa1}
+.q{font-weight:600;color:#2c2c2c;font-size:.92rem}
+.a{padding:0 15px 14px;font-size:.88rem;white-space:pre-wrap;border-top:1px solid #f0ece7;padding-top:12px}
+.empty{padding:40px 0;text-align:center;color:#8a7e72}
+`;
+
+function adminShell(tab, key, title, inner) {
+  const k = encodeURIComponent(key);
+  const t = (id, label) =>
+    `<a class="${tab === id ? 'on' : ''}" href="/log?key=${k}${id === 'chat' ? '' : '&tab=' + id}">${label}</a>`;
+  return `<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow"><title>아랑재 · ${escapeHtml(title)}</title>
+<style>${ADMIN_CSS}</style></head><body><div class="wrap">
+<h1>아랑재 관리자</h1>
+<div class="tabs">${t('chat', '대화 기록')}${t('visits', '방문 기록')}</div>
+${inner}
+</div></body></html>`;
+}
+
+async function renderLogPage(env, key) {
   const listed = await env.RATE.list({ prefix: 'log:', limit: 1000 });
   const keys = listed.keys.map((k) => k.name).sort().reverse().slice(0, LOG_PAGE_SIZE);
-  const rows = await Promise.all(
+  const rows = (await Promise.all(
     keys.map((k) => env.RATE.get(k).then((v) => { try { return JSON.parse(v); } catch { return null; } }))
-  );
+  )).filter(Boolean);
 
-  const items = rows.filter(Boolean).map((r) => {
+  const items = rows.map((r) => {
     const when = new Date(r.t).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', dateStyle: 'short', timeStyle: 'short' });
     return `<details class="row">
       <summary><span class="when">${escapeHtml(when)}</span><span class="q">${escapeHtml(r.q)}</span></summary>
@@ -225,31 +303,9 @@ async function renderLogPage(env) {
     </details>`;
   }).join('\n');
 
-  return `<!DOCTYPE html><html lang="ko"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex, nofollow"><title>아랑재 챗봇 대화 기록</title>
-<style>
-:root{color-scheme:light}
-*{box-sizing:border-box}
-body{margin:0;background:#faf8f5;color:#4a4441;font:15px/1.6 'Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  padding:env(safe-area-inset-top) 0 calc(40px + env(safe-area-inset-bottom))}
-.wrap{max-width:720px;margin:0 auto;padding:24px 16px}
-h1{font-size:1.15rem;color:#2c2c2c;margin:0 0 4px}
-.sub{font-size:.82rem;color:#8a7e72;margin-bottom:18px}
-#filter{width:100%;padding:11px 13px;border:1px solid #e8e0d8;border-radius:11px;font:inherit;background:#fff;margin-bottom:14px}
-.row{background:#fff;border:1px solid #e8e0d8;border-radius:12px;margin-bottom:8px;overflow:hidden}
-.row>summary{list-style:none;cursor:pointer;padding:13px 15px;display:flex;flex-direction:column;gap:3px}
-.row>summary::-webkit-details-marker{display:none}
-.when{font-size:.72rem;color:#b3aaa1}
-.q{font-weight:600;color:#2c2c2c;font-size:.92rem}
-.a{padding:0 15px 14px;font-size:.88rem;color:#4a4441;white-space:pre-wrap;border-top:1px solid #f0ece7;padding-top:12px;margin-top:2px}
-.empty{padding:40px 0;text-align:center;color:#8a7e72}
-</style></head><body><div class="wrap">
-<h1>아랑재 챗봇 대화 기록</h1>
-<div class="sub">최근 ${rows.filter(Boolean).length}건 · ${LOG_RETENTION_DAYS}일 보관 · 질문을 누르면 답변이 보입니다</div>
+  const inner = `<div class="sub">최근 ${rows.length}건 · ${LOG_RETENTION_DAYS}일 보관 · 질문을 누르면 답변이 펼쳐집니다</div>
 <input id="filter" placeholder="검색 (예: 짐, 수건, check-in)" autocomplete="off">
 <div id="list">${items || '<div class="empty">아직 기록이 없습니다.</div>'}</div>
-</div>
 <script>
 document.getElementById('filter').addEventListener('input',function(){
   var q=this.value.trim().toLowerCase();
@@ -257,7 +313,83 @@ document.getElementById('filter').addEventListener('input',function(){
     el.style.display = !q || el.textContent.toLowerCase().indexOf(q)>=0 ? '' : 'none';
   });
 });
-</script></body></html>`;
+</script>`;
+  return adminShell('chat', key, '대화 기록', inner);
+}
+
+// KV 목록은 한 번에 1000개까지만 오므로 커서를 따라가며 모읍니다.
+async function listAll(env, prefix, max = 4000) {
+  const out = [];
+  let cursor;
+  do {
+    const page = await env.RATE.list({ prefix, limit: 1000, cursor });
+    out.push(...page.keys);
+    cursor = page.list_complete ? null : page.cursor;
+  } while (cursor && out.length < max);
+  return out;
+}
+
+function kstDate(iso) {
+  return new Date(iso).toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' }); // YYYY-MM-DD
+}
+
+function table(head, rows) {
+  if (!rows.length) return '<div class="empty">아직 기록이 없습니다.</div>';
+  return `<table><tr>${head.map((h, i) => `<th${i ? ' style="text-align:right"' : ''}>${h}</th>`).join('')}</tr>
+${rows.join('\n')}</table>`;
+}
+
+async function renderVisitPage(env, key) {
+  const [visits, sections] = await Promise.all([listAll(env, 'vis:'), listAll(env, 'sec:')]);
+
+  const byDay = new Map();
+  const byLang = new Map();
+  const byRef = new Map();
+  for (const k of visits) {
+    const iso = k.name.slice(4, 28);
+    const m = k.metadata || {};
+    const d = kstDate(iso);
+    if (!isNaN(new Date(iso))) byDay.set(d, (byDay.get(d) || 0) + 1);
+    byLang.set(m.lang || 'ko', (byLang.get(m.lang || 'ko') || 0) + 1);
+    const ref = m.ref ? m.ref : '(직접 입력 · 메시지 링크)';
+    byRef.set(ref, (byRef.get(ref) || 0) + 1);
+  }
+
+  const bySection = new Map();
+  for (const k of sections) {
+    for (const id of (k.metadata && k.metadata.opened) || []) {
+      bySection.set(id, (bySection.get(id) || 0) + 1);
+    }
+  }
+
+  const total = visits.length;
+  const pct = (n) => (total ? Math.round((n / total) * 100) + '%' : '-');
+  const desc = (map) => [...map.entries()].sort((a, b) => b[1] - a[1]);
+
+  const days = desc(byDay).sort((a, b) => (a[0] < b[0] ? 1 : -1)).slice(0, 14);
+
+  const inner = `<div class="sub">전체 ${total}회 방문 · ${VISIT_RETENTION_DAYS}일 보관 · 쿠키와 IP는 저장하지 않습니다</div>
+
+<h2>어떤 항목을 열어봤나</h2>
+${table(['섹션', '열람', '방문 대비'],
+  desc(bySection).map(([id, n]) =>
+    `<tr><td>${escapeHtml(SECTION_LABELS[id] || id)}</td><td class="n">${n}</td><td class="pct">${pct(n)}</td></tr>`))}
+
+<h2>날짜별 방문</h2>
+${table(['날짜', '방문'],
+  days.map(([d, n]) => `<tr><td>${escapeHtml(d)}</td><td class="n">${n}</td></tr>`))}
+
+<h2>언어</h2>
+${table(['언어', '방문', '비율'],
+  desc(byLang).map(([l, n]) =>
+    `<tr><td>${l === 'en' ? 'English' : '한국어'}</td><td class="n">${n}</td><td class="pct">${pct(n)}</td></tr>`))}
+
+<h2>어디서 들어왔나</h2>
+${table(['유입 경로', '방문', '비율'],
+  desc(byRef).slice(0, 10).map(([r, n]) =>
+    `<tr><td>${escapeHtml(r)}</td><td class="n">${n}</td><td class="pct">${pct(n)}</td></tr>`))}`;
+
+  return adminShell('visits', key, '방문 기록', inner);
 }
 
 // ── 진입점 ────────────────────────────────────────────
@@ -284,13 +416,31 @@ export default {
           headers: { 'Content-Type': 'text/plain; charset=utf-8' },
         });
       }
-      return new Response(await renderLogPage(env), {
+      const page = url.searchParams.get('tab') === 'visits'
+        ? await renderVisitPage(env, given)
+        : await renderLogPage(env, given);
+      return new Response(page, {
         headers: {
           'Content-Type': 'text/html; charset=utf-8',
           'Cache-Control': 'no-store',
           'X-Robots-Tag': 'noindex, nofollow',
         },
       });
+    }
+
+    // 방문 기록 수집. sendBeacon 으로 들어오므로 응답은 바로 비우고
+    // 저장은 뒤에서 처리합니다. 실패해도 가이드 페이지에는 영향이 없습니다.
+    if (request.method === 'POST' && url.pathname === '/track') {
+      if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+        return new Response(null, { status: 204, headers: corsHeaders(origin) });
+      }
+      ctx.waitUntil(
+        request.text()
+          .then((t) => JSON.parse(t))
+          .then((body) => recordVisit(env, body))
+          .catch(() => {})
+      );
+      return new Response(null, { status: 204, headers: corsHeaders(origin) });
     }
 
     if (request.method !== 'POST') {

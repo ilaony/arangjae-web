@@ -100,12 +100,28 @@ https://arangjae-chat.ilaony.workers.dev/log?key=<위에서 정한 문자열>
 휴대폰 브라우저에서 바로 열립니다. 즐겨찾기에 넣어두시면 편합니다.
 질문을 누르면 챗봇이 한 답변이 펼쳐지고, 위쪽 검색창으로 걸러볼 수 있습니다.
 
+페이지 위쪽에서 **대화 기록 / 방문 기록** 두 탭을 오갈 수 있습니다.
+
 - 최근 150건까지 보여줍니다
 - **90일이 지나면 자동으로 삭제됩니다**
 - **질문·답변·시각만 저장하고, IP나 접속 정보는 저장하지 않습니다**
 - 키가 틀리면 페이지가 있다는 사실조차 알리지 않고 404를 돌려줍니다
 
 보관 기간은 `src/worker.js` 의 `LOG_RETENTION_DAYS` 에서 바꿀 수 있습니다.
+
+### 방문 기록 탭
+
+가이드 페이지가 열릴 때마다 Worker로 신호가 와서 쌓입니다.
+별도 설정 없이 `ADMIN_KEY` 만 있으면 바로 보입니다.
+
+- **어떤 항목을 열어봤나** — 섹션별 열람 횟수. 가이드 구성을 바꿀 근거가 됩니다
+- **날짜별 방문** — 최근 14일
+- **언어** — 한국어 / English 비율
+- **어디서 들어왔나** — Airbnb, Booking.com, 직접 입력 등
+
+수집하는 것은 **시각 · 언어 · 유입 호스트 · 열어본 섹션** 뿐입니다.
+쿠키, IP, 방문자 식별자는 저장하지 않으며 90일 후 자동 삭제됩니다.
+브라우저에 "추적 안 함(Do Not Track)"이 켜져 있으면 아예 보내지 않습니다.
 
 
 ## 고칠 일이 생기면
@@ -116,7 +132,7 @@ https://arangjae-chat.ilaony.workers.dev/log?key=<위에서 정한 문자열>
 | 답변 말투·규칙 바꾸기 | `src/worker.js` 의 `systemPrompt()` |
 | 답변 길이 | `MAX_TOKENS` |
 | 요청 제한 | `LIMIT_PER_MINUTE`, `LIMIT_PER_DAY` |
-| 기록 보관 기간 | `LOG_RETENTION_DAYS` |
+| 기록 보관 기간 | `LOG_RETENTION_DAYS`, `VISIT_RETENTION_DAYS` |
 
 고친 뒤에는 `npx wrangler deploy` 로 다시 올리면 됩니다.
 
