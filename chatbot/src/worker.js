@@ -233,7 +233,9 @@ async function recordVisit(env, body) {
       const opened = body.opened.filter((x) => SECTION_IDS.includes(x)).slice(0, SECTION_IDS.length);
       if (opened.length) await env.RATE.put(`sec:${stamp}`, '', { ...ttl, metadata: { opened } });
     }
-  } catch { /* 기록 실패는 무시 */ }
+  } catch (e) {
+    console.error('방문 기록 저장 실패:', e && e.message);
+  }
 }
 
 function escapeHtml(s) {
@@ -428,18 +430,21 @@ export default {
       });
     }
 
-    // 방문 기록 수집. sendBeacon 으로 들어오므로 응답은 바로 비우고
-    // 저장은 뒤에서 처리합니다. 실패해도 가이드 페이지에는 영향이 없습니다.
+    // 방문 기록 수집. sendBeacon 으로 들어오므로 응답은 바로 비웁니다.
+    // 실패해도 가이드 페이지에는 영향이 없습니다.
     if (request.method === 'POST' && url.pathname === '/track') {
       if (origin && !ALLOWED_ORIGINS.includes(origin)) {
         return new Response(null, { status: 204, headers: corsHeaders(origin) });
       }
-      ctx.waitUntil(
-        request.text()
-          .then((t) => JSON.parse(t))
-          .then((body) => recordVisit(env, body))
-          .catch(() => {})
-      );
+      // 본문 읽기는 반드시 응답을 돌려보내기 "전에" 끝내야 합니다.
+      // 응답을 먼저 반환하면 요청 스트림이 닫혀 본문을 읽지 못합니다.
+      let body = null;
+      try {
+        body = JSON.parse(await request.text());
+      } catch (e) {
+        console.error('track 본문을 읽지 못했습니다:', e && e.message);
+      }
+      if (body) ctx.waitUntil(recordVisit(env, body));
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
     }
 
