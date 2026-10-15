@@ -2,13 +2,11 @@ name = "arangjae-chat"
 main = "src/worker.js"
 compatibility_date = "2026-10-01"
 
-# API 키는 이 파일에 적지 마세요. 아래 명령으로 따로 넣습니다.
+# API 키는 이 파일에 적지 않습니다. 아래 명령으로 따로 넣습니다.
 #   npx wrangler secret put OPENROUTER_API_KEY
 
-# 요청 제한(남용 방지)을 쓰려면 KV 네임스페이스를 만들고
-# 아래 주석을 풀어 id를 채우세요.
-#   npx wrangler kv namespace create RATE
-#
-# [[kv_namespaces]]
-# binding = "RATE"
-# id = "여기에_발급받은_id"
+# 남용 방지용 요청 제한 저장소 (IP당 분당·하루 횟수를 세는 용도)
+#   만든 명령: npx wrangler kv namespace create RATE
+[[kv_namespaces]]
+binding = "RATE"
+id = "f222745d91744c28b147a0d5a531c4ef"

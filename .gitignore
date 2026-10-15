@@ -3,3 +3,6 @@ work/
 
 # macOS
 .DS_Store
+
+# wrangler 로컬 캐시
+chatbot/.wrangler/
