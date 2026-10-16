@@ -27,9 +27,12 @@ const LIMIT_PER_MINUTE = 6;     // IP당 분당 질문 수
 const LIMIT_PER_DAY = 60;       // IP당 하루 질문 수
 const GUIDE_CACHE_SECONDS = 3600;
 
-const LOG_RETENTION_DAYS = 90; // 대화 기록 보관 기간
+// 계절이 한 바퀴 돌아야 시기별로 게스트의 관심사가 달라지는지 보인다.
+// 365일로 두면 작년 같은 달 기록이 막 사라진 뒤라 비교가 안 되므로
+// 한 달 여유를 둔다.
+const LOG_RETENTION_DAYS = 400; // 대화 기록 보관 기간
 const LOG_PAGE_SIZE = 150;     // 관리자 페이지에 한 번에 보여줄 개수
-const VISIT_RETENTION_DAYS = 90; // 방문 기록 보관 기간
+const VISIT_RETENTION_DAYS = 400; // 방문 기록 보관 기간
 
 // 방문 기록에서 받아들일 섹션 id (이 목록에 없으면 버립니다)
 const SECTION_IDS = ['directions', 'parking', 'wifi', 'appliances', 'waste', 'rules', 'nearby', 'emergency', 'faq', 'contact'];
